@@ -25,16 +25,21 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 35 0 0">
                     <Border CornerRadius="10" Width="40" Height="40">
                         <Border.Background>
-                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                <GradientStop Color="#9aa5ce" Offset="0"/>
-                                <GradientStop Color="#414868" Offset="0.5"/>
-                                <GradientStop Color="#1a1b26" Offset="1"/>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1.25">
+                                <GradientStop Color="#bb9af7" Offset="0"/>
+                                <GradientStop Color="#565f89" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
+
+                        <TextBlock Text="KP" Foreground="Black" FontSize="20" FontWeight="SemiBold" FontFamily="Cooper Black"
+                                   TextAlignment="Center" VerticalAlignment="Center" Margin="3 0 0 2"/>
                     </Border>
+                    <StackPanel Margin="10 0 0 0" VerticalAlignment="Center">
+                        <TextBlock Text="Keep Cool Adaptive VR" FontSize="18" FontWeight="ExtraBold"  FontFamily="Perpetua" Margin="0 0 0 5" Foreground="#1a1b26"/>
+                        <TextBlock Text="Stress Message Manager" FontSize="13"  FontFamily="Perpetua" Foreground="#24283b"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
-            
         </Border>
 
         <Border Grid.Column="1" CornerRadius="0 10 10 0" MouseDown="Border_MouseDownEvent">
