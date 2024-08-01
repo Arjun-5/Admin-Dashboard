@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StressCommunicationAdminPanel"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
         Title="MainWindow" Height="740" Width="1280" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
     <Grid>
@@ -38,7 +39,20 @@
                         <TextBlock Text="Keep Cool Adaptive VR" FontSize="18" FontWeight="ExtraBold"  FontFamily="Perpetua" Margin="0 0 0 5" Foreground="#1a1b26"/>
                         <TextBlock Text="Stress Message Manager" FontSize="13"  FontFamily="Perpetua" Foreground="#24283b"/>
                     </StackPanel>
+                    
                 </StackPanel>
+
+                <Separator Height="0.9" Margin="20 30" Background="#24283b"/>
+                
+                <!-- Menu Buttons -->
+                <Button>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="HomeUser"/>
+                        <TextBlock Text="Administrator Panel">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+                
             </StackPanel>
         </Border>
 
