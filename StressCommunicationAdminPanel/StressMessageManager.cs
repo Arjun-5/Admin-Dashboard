@@ -1,68 +1,18 @@
 ﻿using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
+using System;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Timers;
-using System;
-using System.Windows;
-using System.Windows.Input;
 using System.IO;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace StressCommunicationAdminPanel
 {
-  /// <summary>
-  /// Interaction logic for MainWindow.xaml
-  /// </summary>
-  /// 
-  /// To Do List 
-  /// 
-  /// Add a start/loading screen
-  /// Send task message containing tasks
-  /// Send stress effects
-  /// Add view model for different views
-  /// View model for adding config value - text box to display the current Ip address, timer interval and port number
-  /// view model for showing graph data for velocity and accleration and time stamp
-  /// view model for showing graph data for self record stress value based on time stamp 
-  /// view model for showing graph data for task start time and task end time
-  /// status bar loader for sending stress message every seconds and the value of the stress should be between 0 (inclusive) and 1 (inclusive)
-  /// 
-  public partial class MainWindow : Window
+  public class StressMessageManager
   {
-    private ObservableCollection<StressNotificationMessage> stressNotificationMessages { get; set; }
-
-    public ObservableCollection<StressNotificationMessage>  StressNotificationMessages => stressNotificationMessages;
-
-    public MainWindow()
-    {
-      InitializeComponent();
-
-      stressNotificationMessages = new ObservableCollection<StressNotificationMessage>();
-
-      Loaded += MainWindow_Loaded;
-    }
-    private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
-    {
-      await Task.Run(() =>
-      {
-        SendBroadcastMessage();
-      });
-    }
-    private void Border_MouseDownEvent(object sender, MouseButtonEventArgs e)
-    {
-      if(e.ChangedButton == MouseButton.Left)
-      {
-        this.DragMove();
-      }
-    }
-    private void MainWindow_Close(object sender, RoutedEventArgs e)
-    {
-      App.Current.Shutdown();
-    }
-    private void SendBroadcastMessage()
+    public void SendBroadcastMessage()
     {
       UdpClient client = new UdpClient();
 
@@ -83,8 +33,6 @@ namespace StressCommunicationAdminPanel
       string configFileLocation = Path.Combine(currentWorkingDirectory, "StressMessageConfig.json");
 
       var processedConfigData = File.ReadAllText(configFileLocation);
-
-      Console.WriteLine("The processed config data is : " + processedConfigData);
 
       return JsonConvert.DeserializeObject<StressMessageConfig>(processedConfigData);
     }
@@ -140,8 +88,6 @@ namespace StressCommunicationAdminPanel
       string serializedNotificationMessage = JsonConvert.SerializeObject(stressNotificationMessage, new StringEnumConverter());
 
       byte[] stressInfoMessage = Encoding.ASCII.GetBytes(serializedNotificationMessage);
-
-      Trace.WriteLine("text"+ stressInfoMessage);
 
       clientSocket.Send(stressInfoMessage);
 
