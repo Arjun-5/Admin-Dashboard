@@ -45,7 +45,7 @@
                 <Separator Height="0.9" Margin="20 30" Background="#24283b"/>
                 
                 <!-- Menu Buttons -->
-                <Button Style="{StaticResource menuButton}">
+                <Button Style="{StaticResource menuButtonActive}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="HomeUser" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="Administrator Panel" Style="{StaticResource menuButtonText}">
@@ -55,8 +55,37 @@
 
                 <Button Style="{StaticResource menuButton}">
                     <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="SignalMessenger" Style="{StaticResource menuButtonIcon}"/>
+                        <TextBlock Text="Stress Message Info" Style="{StaticResource menuButtonText}">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource menuButton}">
+                    <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="ScrewdriverWrench" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="Configure IP Address" Style="{StaticResource menuButtonText}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource menuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="FileSignature" Style="{StaticResource menuButtonIcon}"/>
+                        <TextBlock Text="Self Reported Stress" Style="{StaticResource menuButtonText}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource menuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Tasks" Style="{StaticResource menuButtonIcon}"/>
+                        <TextBlock Text="Task Info" Style="{StaticResource menuButtonText}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource menuButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="VrCardboard" Style="{StaticResource menuButtonIcon}"/>
+                        <TextBlock Text="Device Info" Style="{StaticResource menuButtonText}"/>
                     </StackPanel>
                 </Button>
 
@@ -79,86 +108,55 @@
                 </LinearGradientBrush>
             </Border.Background>
 
-            <StackPanel>
-                <!--
-                                <ScrollViewer Margin="0 50 0 0" VerticalScrollBarVisibility="Auto" Width="500" Height="400">
-                    <ListView Margin="0 50 0 0" Name="stressMessageListView" DockPanel.Dock="Top" Width="500" Height="400" 
-                              Background="#414868" ItemsSource="{Binding StressNotificationMessages}">
-                        <ListView.View>
-                            <GridView>
-                                <GridView.Columns>
-                                    <GridViewColumn Header="Stress Effect Category" Width="250" DisplayMemberBinding="{Binding CurrentStressEffect}" />
-                                    <GridViewColumn Header="Stress Effect Name" Width="250" DisplayMemberBinding="{Binding CurrentStressEffect}" />
-                                    <GridViewColumn Header="Stress value" Width="100">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding StressLevel}" TextDecorations="Underline" Foreground="#f7768e" Cursor="Hand" />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                </GridView.Columns>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </ScrollViewer>
-                -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                <ListView Margin="0 50 0 0" Name="stressMessageListView" DockPanel.Dock="Top" Width="600" Height="400" 
-           Background="#414868" ItemsSource="{Binding StressNotificationMessages}">
-                    <ListView.View>
-                        <GridView>
-                            <GridView.Columns>
-                                <GridViewColumn Header="Stress Effect Category" Width="250" DisplayMemberBinding="{Binding CurrentStressEffect}" />
-                                <GridViewColumn Header="Stress Effect Name" Width="250" DisplayMemberBinding="{Binding CurrentStressEffect}" />
-                                <GridViewColumn Header="Stress value" Width="100">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding StressLevel}" TextDecorations="Underline" Foreground="#f7768e" Cursor="Hand" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView.Columns>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-                <StatusBar Name="stressMessageProgessBar" VerticalAlignment="Bottom">
-                    <StatusBar.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0.9,1">
-                            <GradientStop Color="#9aa5ce" Offset="0"/>
-                            <GradientStop Color="#414868" Offset="0.5"/>
-                            <GradientStop Color="#1a1b26" Offset="1"/>
-                        </LinearGradientBrush>
-                    </StatusBar.Background>
-                    <StatusBarItem Margin="5 0 0 0">
-                        <TextBlock Text="Not Connected!!!" Style="{StaticResource menuButtonText}"/>
-                    </StatusBarItem>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 50 30 20">
+                    <TextBlock Text="Keep Cool Adaptive VR : Admin Panel" FontSize="40" FontWeight="Bold"/>
+                </StackPanel>
+                
+            </Grid>
+            
+            <!-- <StatusBar Name="stressMessageProgessBar" VerticalAlignment="Bottom">
+                <StatusBar.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0.9,1">
+                        <GradientStop Color="#9aa5ce" Offset="0"/>
+                        <GradientStop Color="#414868" Offset="0.5"/>
+                        <GradientStop Color="#1a1b26" Offset="1"/>
+                    </LinearGradientBrush>
+                </StatusBar.Background>
+                <StatusBarItem Margin="5 0 0 0">
+                    <TextBlock Text="Not Connected!!!" Style="{StaticResource menuButtonText}"/>
+                </StatusBarItem>
 
-                    <StatusBarItem Margin="20 0 0 0">
-                        <TextBlock Text="Sending next Stress message in...." Style="{StaticResource menuButtonText}"/>
-                    </StatusBarItem>
-                    <StatusBarItem Margin="20 0 0 0">
-                        <ProgressBar Width="100" Height="20" Name="messageProgressBar">
-                            <ProgressBar.Triggers>
-                                <EventTrigger RoutedEvent="ProgressBar.Loaded">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="messageProgressBar" Storyboard.TargetProperty="Value" From="0" To="100" Duration="0:0:30"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </ProgressBar.Triggers>
-                        </ProgressBar>
-                    </StatusBarItem>
-                    <Separator/>
-                    <StatusBarItem Margin="20 0 0 0">
-                        <TextBlock Text="Waiting to send..." Style="{StaticResource menuButtonText}"/>
-                    </StatusBarItem>
-                    <StatusBarItem HorizontalAlignment="Right">
-                        <fa:IconImage Icon="Bell" Style="{StaticResource menuButtonIcon}"/>
-                    </StatusBarItem>
-                </StatusBar>
-            </StackPanel>
-
+                <StatusBarItem Margin="20 0 0 0">
+                    <TextBlock Text="Sending next Stress message in...." Style="{StaticResource menuButtonText}"/>
+                </StatusBarItem>
+                <StatusBarItem Margin="20 0 0 0">
+                    <ProgressBar Width="100" Height="20" Name="messageProgressBar">
+                        <ProgressBar.Triggers>
+                            <EventTrigger RoutedEvent="ProgressBar.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="messageProgressBar" Storyboard.TargetProperty="Value" From="0" To="100" Duration="0:0:30"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ProgressBar.Triggers>
+                    </ProgressBar>
+                </StatusBarItem>
+                <Separator/>
+                <StatusBarItem Margin="20 0 0 0">
+                    <TextBlock Text="Waiting to send..." Style="{StaticResource menuButtonText}"/>
+                </StatusBarItem>
+                <StatusBarItem HorizontalAlignment="Right">
+                    <fa:IconImage Icon="Bell" Style="{StaticResource menuButtonIcon}"/>
+                </StatusBarItem>
+            </StatusBar> -->
         </Border>
     </Grid>
 </Window>
