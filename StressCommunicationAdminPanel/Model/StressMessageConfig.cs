@@ -1,4 +1,4 @@
-﻿namespace StressCommunicationAdminPanel
+﻿namespace StressCommunicationAdminPanel.Model
 {
   public class StressMessageConfig
   {

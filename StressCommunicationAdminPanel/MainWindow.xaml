@@ -45,7 +45,7 @@
                 <Separator Height="0.9" Margin="20 30" Background="#24283b"/>
                 
                 <!-- Menu Buttons -->
-                <Button Style="{StaticResource menuButtonActive}">
+                <Button Style="{StaticResource menuButtonActive}" Command="{Binding SendBroadcastMessageCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="HomeUser" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="Administrator Panel" Style="{StaticResource menuButtonText}">

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace StressCommunicationAdminPanel
+namespace StressCommunicationAdminPanel.Model
 {
   public class StressNotificationMessage
   {
@@ -16,13 +16,5 @@ namespace StressCommunicationAdminPanel
       
       this.stressLevel = stressLevel;
     }
-  }
-  public enum StressEffectType
-  {
-    Flies,
-    CameraShake,
-    Wind,
-    Overlay,
-    AudioLoop
   }
 }

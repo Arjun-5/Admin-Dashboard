@@ -11,6 +11,8 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using StressCommunicationAdminPanel.Model;
+using StressCommunicationAdminPanel.ViewModel;
 
 namespace StressCommunicationAdminPanel
 {
@@ -40,9 +42,7 @@ namespace StressCommunicationAdminPanel
     {
       InitializeComponent();
 
-      stressNotificationMessages = new ObservableCollection<StressNotificationMessage>();
-
-      Loaded += MainWindow_Loaded;
+      DataContext = new StressMessageViewModel();
     }
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {

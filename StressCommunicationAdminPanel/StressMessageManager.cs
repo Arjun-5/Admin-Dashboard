@@ -7,6 +7,7 @@ using System.Text;
 using System.Timers;
 using System.IO;
 using System.Collections.Generic;
+using StressCommunicationAdminPanel.Model;
 
 namespace StressCommunicationAdminPanel
 {

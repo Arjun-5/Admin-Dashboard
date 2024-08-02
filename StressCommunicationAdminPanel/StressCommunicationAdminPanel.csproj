@@ -65,11 +65,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="StressMessageConfig.cs" />
+    <Compile Include="Model\StressEffectType.cs" />
+    <Compile Include="Model\StressMessage.cs" />
+    <Compile Include="Model\StressMessageConfig.cs" />
     <Compile Include="StressMessageManager.cs" />
     <Compile Include="StressMessageViewModel.cs" />
-    <Compile Include="StressNotificationMessage.cs" />
+    <Compile Include="Model\StressNotificationMessage.cs" />
     <Compile Include="UserResponse.cs" />
+    <Compile Include="ViewModel\AppViewModel.cs" />
+    <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="ViewModel\StressMessageViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
