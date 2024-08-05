@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="StressCommunicationAdminPanel.App_Status_User_Controls.StressMessageInfoCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StressCommunicationAdminPanel.App_Status_User_Controls"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             mc:Ignorable="d" 
+             d:DesignHeight="140" d:DesignWidth="316" Name="StressMessageStatusInfoCard">
+    <Border Margin="0 0 25 0">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0.95">
+                <GradientStop Color="{Binding Path=CardBackgroundGradientLeft,ElementName=StressMessageStatusInfoCard}" Offset="0"/>
+                <GradientStop Color="{Binding Path=CardBackgroundGradientRight,ElementName=StressMessageStatusInfoCard}" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Border.Clip>
+            <RectangleGeometry RadiusX="15" RadiusY="15" Rect="0,0,290,140"/>
+        </Border.Clip>
+
+        <Grid>
+            <Ellipse Width="230" Height="230" Margin="0 -130 -90 0" HorizontalAlignment="Right">
+                <Ellipse.Fill>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                        <GradientStop Color="{Binding Path=CardEllipseBackgroundGradientLeft,ElementName=StressMessageStatusInfoCard}" Offset="0"/>
+                        <GradientStop Color="{Binding Path=CardEllipseBackgroundGradientRight,ElementName=StressMessageStatusInfoCard}" Offset="1"/>
+                    </LinearGradientBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Path Fill="{Binding Path=CardStarFillColor,ElementName=StressMessageStatusInfoCard}" Stroke="{Binding Path=CardStarStrokeColor,ElementName=StressMessageStatusInfoCard}" StrokeThickness="0.2"
+              Data="M 5,0 L 6,3.5 L 10,3.5 L 6.5,5.5 L 8,9 L 5,7 L 2,9 L 3.5,5.5 L 0,3.5 L 4,3.5 Z"
+              Margin="0,1,40,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <Path Fill="{Binding Path=CardStarFillColor,ElementName=StressMessageStatusInfoCard}" Stroke="{Binding Path=CardStarStrokeColor,ElementName=StressMessageStatusInfoCard}" StrokeThickness="0.2"
+              Data="M 5,0 L 6,3.5 L 10,3.5 L 6.5,5.5 L 8,9 L 5,7 L 2,9 L 3.5,5.5 L 0,3.5 L 4,3.5 Z"
+              Margin="30,20,30,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <Path Fill="{Binding Path=CardStarFillColor,ElementName=StressMessageStatusInfoCard}" Stroke="{Binding Path=CardStarStrokeColor,ElementName=StressMessageStatusInfoCard}" StrokeThickness="0.2"
+              Data="M 5,0 L 6,3.5 L 10,3.5 L 6.5,5.5 L 8,9 L 5,7 L 2,9 L 3.5,5.5 L 0,3.5 L 4,3.5 Z"
+              Margin="20,35,18,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <Path Fill="{Binding Path=CardStarFillColor,ElementName=StressMessageStatusInfoCard}" Stroke="{Binding Path=CardStarStrokeColor,ElementName=StressMessageStatusInfoCard}" StrokeThickness="0.2"
+              Data="M 5,0 L 6,3.5 L 10,3.5 L 6.5,5.5 L 8,9 L 5,7 L 2,9 L 3.5,5.5 L 0,3.5 L 4,3.5 Z"
+              Margin="5,45,2,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+
+            <fa:IconImage Icon="{Binding Path=CardIcon,ElementName=StressMessageStatusInfoCard}" Margin="0 0 40 35" Width="40" Height="40" 
+                          Foreground="{Binding Path=CardIconColor,ElementName=StressMessageStatusInfoCard}"
+                          HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            
+            <StackPanel Margin="10 0 0 10" VerticalAlignment="Bottom">
+                <TextBlock Text="{Binding Path=CardTitle,ElementName=StressMessageStatusInfoCard}" Foreground="Black" FontFamily="Cooper Black" FontSize="12"/>
+                <TextBlock Text="{Binding Path=CardDescription,ElementName=StressMessageStatusInfoCard}" Foreground="White" FontFamily="Perpetua" FontSize=" 20" FontWeight="SemiBold"/>
+            </StackPanel>
+        </Grid>
+            
+    </Border>
+</UserControl>

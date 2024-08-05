@@ -7,11 +7,11 @@
     <Application.Resources>
         <Style x:Key="menuButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#343b58"/>
+            <Setter Property="Foreground" Value="#c0caf5"/>
             <Setter Property="Margin" Value="0 0 0 5"/>
             <Setter Property="Height" Value="75"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Tag"  Value="#c0caf5"/>
+            <Setter Property="Tag"  Value="#1a1b26"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -68,12 +68,12 @@
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                        <GradientStop Color="#bb9af7" Offset="0"/>
-                        <GradientStop Color="#565f89" Offset="1"/>
+                        <GradientStop Color="#40434f" Offset="0"/>
+                        <GradientStop Color="#343b58" Offset="1"/>
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Foreground" Value="#bccaf1"/>
+            <Setter Property="Foreground" Value="#f7768e"/>
             <Setter Property="Margin" Value="0 0 0 5"/>
             <Setter Property="Height" Value="75"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>

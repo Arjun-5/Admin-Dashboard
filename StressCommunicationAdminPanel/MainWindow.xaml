@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StressCommunicationAdminPanel"
+        xmlns:uc="clr-namespace:StressCommunicationAdminPanel.App_Status_User_Controls"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
         Title="MainWindow" Height="740" Width="1280" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
@@ -16,9 +17,9 @@
         <Border CornerRadius="10 0 0 10">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                    <GradientStop Color="#9aa5ce" Offset="0"/>
+                    <GradientStop Color="#565f89" Offset="0"/>
                     <GradientStop Color="#414868" Offset="0.5"/>
-                    <GradientStop Color="#1a1b26" Offset="1"/>
+                    <GradientStop Color="#24283b" Offset="1"/>
                 </LinearGradientBrush>
             </Border.Background>
 
@@ -116,8 +117,37 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 50 30 20">
-                    <TextBlock Text="Keep Cool Adaptive VR : Admin Panel" FontSize="40" FontWeight="Bold"/>
+                    <TextBlock Text="Keep Cool Adaptive VR : Admin Panel" FontSize="40" FontWeight="Bold" FontFamily="Perpetua" Foreground="#c0caf5"/>
                 </StackPanel>
+
+
+                <Grid Grid.Row="1" Margin="50 20 30 40">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <uc:StressMessageInfoCard Grid.Column="0">
+                        <uc:StressMessageInfoCard CardTitle="Connection Status" CardDescription="Not Connected!!!" CardIcon="Signal" CardIconColor="Red" 
+                                                  CardBackgroundGradientLeft="#73daca" CardBackgroundGradientRight="#414868"
+                                                  CardEllipseBackgroundGradientLeft="#2ac3de" CardEllipseBackgroundGradientRight="#24283b" 
+                                                  CardStarFillColor="#9ece6a" CardStarStrokeColor="#24283b"/>
+                    </uc:StressMessageInfoCard>
+
+                    <uc:StressMessageInfoCard Grid.Column="1">
+                        <uc:StressMessageInfoCard CardTitle="Stress Message Sent" CardDescription="Messages Sent : 0" CardIcon="EnvelopeCircleCheck" CardIconColor="Black" 
+                                                  CardBackgroundGradientLeft="#73daca" CardBackgroundGradientRight="#414868"
+                                                  CardEllipseBackgroundGradientLeft="#2ac3de" CardEllipseBackgroundGradientRight="#24283b" 
+                                                  CardStarFillColor="#9ece6a" CardStarStrokeColor="#24283b"/>
+                    </uc:StressMessageInfoCard>
+
+                    <uc:StressMessageInfoCard Grid.Column="2">
+                        <uc:StressMessageInfoCard CardTitle="Stress Message Received" CardDescription="Messages Received : 0" CardIcon="EnvelopeOpenText" CardIconColor="Black" 
+                                                  CardBackgroundGradientLeft="#73daca" CardBackgroundGradientRight="#414868"
+                                                  CardEllipseBackgroundGradientLeft="#2ac3de" CardEllipseBackgroundGradientRight="#24283b" 
+                                                  CardStarFillColor="#9ece6a" CardStarStrokeColor="#24283b"/>
+                    </uc:StressMessageInfoCard>
+                </Grid>
                 
             </Grid>
             
