@@ -13,6 +13,7 @@ namespace StressCommunicationAdminPanel.App_Status_User_Controls
     public StressMessageInfoCard()
     {
       InitializeComponent();
+      DataContext = this;
     }
 
     public string CardTitle

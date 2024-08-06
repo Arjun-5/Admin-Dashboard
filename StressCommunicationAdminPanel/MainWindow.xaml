@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:StressCommunicationAdminPanel"
         xmlns:uc="clr-namespace:StressCommunicationAdminPanel.App_Status_User_Controls"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="740" Width="1280" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
     <Grid>
@@ -116,10 +117,17 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 50 30 20">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50 50 30 20">
                     <TextBlock Text="Keep Cool Adaptive VR : Admin Panel" FontSize="40" FontWeight="Bold" FontFamily="Perpetua" Foreground="#c0caf5"/>
                 </StackPanel>
 
+                <Border Width="50" Height="50" Background="#565f89" BorderBrush="OrangeRed" BorderThickness="2" CornerRadius="10" Margin="50 50 55 20" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Command="{Binding ToggleServerStateCommand}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <fa:IconImage Icon="{Binding ConnectionStatusIcon}" Width="24" Height="24" Margin="5"/>
+                        </StackPanel>
+                    </Button>
+                </Border>
 
                 <Grid Grid.Row="1" Margin="50 20 30 40">
                     <Grid.ColumnDefinitions>
@@ -128,30 +136,89 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <uc:StressMessageInfoCard Grid.Column="0">
-                        <uc:StressMessageInfoCard CardTitle="Connection Status" CardDescription="Not Connected!!!" CardIcon="Signal" CardIconColor="Red" 
-                                                  CardBackgroundGradientLeft="#73daca" CardBackgroundGradientRight="#414868"
-                                                  CardEllipseBackgroundGradientLeft="#2ac3de" CardEllipseBackgroundGradientRight="#24283b" 
+                        <uc:StressMessageInfoCard CardTitle="Connection Status" CardDescription="{Binding ConnectionStatus}" CardIcon="Signal" CardIconColor="Red" 
+                                                  CardBackgroundGradientLeft="#827bff" CardBackgroundGradientRight="#e4bbff"
+                                                  CardEllipseBackgroundGradientLeft="#b29afd" CardEllipseBackgroundGradientRight="#24283b" 
                                                   CardStarFillColor="#9ece6a" CardStarStrokeColor="#24283b"/>
                     </uc:StressMessageInfoCard>
 
                     <uc:StressMessageInfoCard Grid.Column="1">
                         <uc:StressMessageInfoCard CardTitle="Stress Message Sent" CardDescription="Messages Sent : 0" CardIcon="EnvelopeCircleCheck" CardIconColor="Black" 
-                                                  CardBackgroundGradientLeft="#73daca" CardBackgroundGradientRight="#414868"
-                                                  CardEllipseBackgroundGradientLeft="#2ac3de" CardEllipseBackgroundGradientRight="#24283b" 
+                                                  CardBackgroundGradientLeft="#fd8a87" CardBackgroundGradientRight="#f3ab92"
+                                                  CardEllipseBackgroundGradientLeft="#fbd5a8" CardEllipseBackgroundGradientRight="#fdb89b" 
                                                   CardStarFillColor="#9ece6a" CardStarStrokeColor="#24283b"/>
                     </uc:StressMessageInfoCard>
 
                     <uc:StressMessageInfoCard Grid.Column="2">
-                        <uc:StressMessageInfoCard CardTitle="Stress Message Received" CardDescription="Messages Received : 0" CardIcon="EnvelopeOpenText" CardIconColor="Black" 
-                                                  CardBackgroundGradientLeft="#73daca" CardBackgroundGradientRight="#414868"
-                                                  CardEllipseBackgroundGradientLeft="#2ac3de" CardEllipseBackgroundGradientRight="#24283b" 
+                        <uc:StressMessageInfoCard CardTitle="Message from Client" CardDescription="Messages Received : 0" CardIcon="EnvelopeOpenText" CardIconColor="Black" 
+                                                  CardBackgroundGradientLeft="#fc84cb" CardBackgroundGradientRight="#fc8fae"
+                                                  CardEllipseBackgroundGradientLeft="#fc8fae" CardEllipseBackgroundGradientRight="#ffabe6" 
                                                   CardStarFillColor="#9ece6a" CardStarStrokeColor="#24283b"/>
                     </uc:StressMessageInfoCard>
                 </Grid>
-                
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" CornerRadius="20" Padding="35 25" Background="#565f89" Margin="50 0 10 40">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" Margin="0 0 0 25">
+                                <fa:IconImage Icon="EnvelopeCircleCheck" Style="{StaticResource titleIcon}"/>
+                                <TextBlock Text="Messages Sent" Style="{StaticResource titleText}"/>
+                            </StackPanel>
+
+                            <lvc:PieChart Grid.Row="1" Series="{Binding MessagesSeries}">
+                                <!-- Define Pie Series properties here -->
+                            </lvc:PieChart>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="1" CornerRadius="20" Padding="35 25" Background="#565f89" Margin="50 0 10 40">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" Margin="0 0 0 25">
+                                <fa:IconImage Icon="EnvelopeOpenText" Style="{StaticResource titleIcon}"/>
+                                <TextBlock Text="Messages Received" Style="{StaticResource titleText}"/>
+                            </StackPanel>
+
+                            <lvc:PieChart Grid.Row="1" Series="{Binding MessagesSeries}">
+                                <!-- Define Pie Series properties here -->
+                            </lvc:PieChart>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="2" CornerRadius="20" Padding="0 25" Background="#565f89" Margin="55 0 55 40">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 15">
+                                <fa:IconImage Icon="CircleInfo" Style="{StaticResource titleIcon}"/>
+                                <TextBlock Text="Client Information" Style="{StaticResource titleText}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
             </Grid>
-            
-            <!-- <StatusBar Name="stressMessageProgessBar" VerticalAlignment="Bottom">
+        </Border>
+    </Grid>
+</Window>
+
+
+<!-- <StatusBar Name="stressMessageProgessBar" VerticalAlignment="Bottom">
                 <StatusBar.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0.9,1">
                         <GradientStop Color="#9aa5ce" Offset="0"/>
@@ -187,6 +254,3 @@
                     <fa:IconImage Icon="Bell" Style="{StaticResource menuButtonIcon}"/>
                 </StatusBarItem>
             </StatusBar> -->
-        </Border>
-    </Grid>
-</Window>

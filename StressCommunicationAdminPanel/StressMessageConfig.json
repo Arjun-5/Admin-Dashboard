@@ -1,4 +1,5 @@
 {
-  "ipaddress": "10.0.0.147",
-  "timeInterval" : 10
+  "ipAddress": "127.0.0.1",
+  "messageTimeInterval" : 5000,
+  "stressMessageSendingPort": 25000
 }
