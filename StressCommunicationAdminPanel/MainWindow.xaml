@@ -121,7 +121,7 @@
                     <TextBlock Text="Keep Cool Adaptive VR : Admin Panel" FontSize="40" FontWeight="Bold" FontFamily="Perpetua" Foreground="#c0caf5"/>
                 </StackPanel>
 
-                <Border Width="50" Height="50" BorderBrush="OrangeRed" BorderThickness="2" CornerRadius="10" Margin="50 50 55 20" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Border Width="50" Height="50" BorderBrush="{Binding ConnectionStatusIconColor}" BorderThickness="2" CornerRadius="10" Margin="50 50 55 20" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="#565f89"/>
@@ -132,7 +132,11 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    
+
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding ToggleServerStateCommand}"/>
+                    </Border.InputBindings>
+
                     <Button Command="{Binding ToggleServerStateCommand}" Style="{DynamicResource connectionButton}">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <fa:IconImage Icon="{Binding ConnectionStatusIcon}" Width="24" Height="24" Margin="5"/>
@@ -147,7 +151,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <uc:StressMessageInfoCard Grid.Column="0">
-                        <uc:StressMessageInfoCard CardTitle="Connection Status" CardDescription="{Binding ConnectionStatus}" CardIcon="Signal" CardIconColor="Red" 
+                        <uc:StressMessageInfoCard CardTitle="Connection Status" CardDescription="{Binding ConnectionStatus}" CardIcon="Signal" CardIconColor="{Binding ConnectionStatusColor}" 
                                                   CardBackgroundGradientLeft="#827bff" CardBackgroundGradientRight="#e4bbff"
                                                   CardEllipseBackgroundGradientLeft="#b29afd" CardEllipseBackgroundGradientRight="#24283b" 
                                                   CardStarFillColor="#9ece6a" CardStarStrokeColor="#24283b"/>
@@ -155,16 +159,16 @@
 
                     <uc:StressMessageInfoCard Grid.Column="1">
                         <uc:StressMessageInfoCard CardTitle="Stress Message Sent" CardMessageTitle="Messages Sent : " CardDescription="{Binding MessagesSent}" CardIcon="EnvelopeCircleCheck" CardIconColor="Black" 
-                                                  CardBackgroundGradientLeft="#fd8a87" CardBackgroundGradientRight="#f3ab92"
-                                                  CardEllipseBackgroundGradientLeft="#fbd5a8" CardEllipseBackgroundGradientRight="#fdb89b" 
-                                                  CardStarFillColor="#9ece6a" CardStarStrokeColor="#24283b"/>
+                                                  CardBackgroundGradientLeft="#ff9e64" CardBackgroundGradientRight="OrangeRed"
+                                                  CardEllipseBackgroundGradientLeft="#e0af68" CardEllipseBackgroundGradientRight="#1a1b26" 
+                                                  CardStarFillColor="#73daca" CardStarStrokeColor="#24283b"/>
                     </uc:StressMessageInfoCard>
 
                     <uc:StressMessageInfoCard Grid.Column="2">
                         <uc:StressMessageInfoCard CardTitle="Message from Client" CardMessageTitle="Messages Received :" CardDescription="0" CardIcon="EnvelopeOpenText" CardIconColor="Black" 
-                                                  CardBackgroundGradientLeft="#fc84cb" CardBackgroundGradientRight="#fc8fae"
-                                                  CardEllipseBackgroundGradientLeft="#fc8fae" CardEllipseBackgroundGradientRight="#ffabe6" 
-                                                  CardStarFillColor="#9ece6a" CardStarStrokeColor="#24283b"/>
+                                                  CardBackgroundGradientLeft="#2ac3de" CardBackgroundGradientRight="BlueViolet"
+                                                  CardEllipseBackgroundGradientLeft="#7dcfff" CardEllipseBackgroundGradientRight="#1a1b26" 
+                                                  CardStarFillColor="#ff9e64" CardStarStrokeColor="#24283b"/>
                     </uc:StressMessageInfoCard>
                 </Grid>
 
@@ -175,7 +179,14 @@
                         <ColumnDefinition Width="300"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border Grid.Column="0" CornerRadius="20" Padding="35 25" Background="#565f89" Margin="50 0 10 40">
+                    <Border Grid.Column="0" CornerRadius="20" Padding="35 25" Margin="50 0 10 40">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#414868" Offset="0"/>
+                                <GradientStop Color="#24283b" Offset="0.5"/>
+                                <GradientStop Color="#1a1b26" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -190,7 +201,14 @@
                         </Grid>
                     </Border>
 
-                    <Border Grid.Column="1" CornerRadius="20" Padding="35 25" Background="#565f89" Margin="50 0 10 40">
+                    <Border Grid.Column="1" CornerRadius="20" Padding="35 25" Margin="50 0 10 40">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#414868" Offset="0"/>
+                                <GradientStop Color="#24283b" Offset="0.5"/>
+                                <GradientStop Color="#1a1b26" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -207,7 +225,14 @@
                         </Grid>
                     </Border>
 
-                    <Border Grid.Column="2" CornerRadius="20" Padding="0 25" Background="#565f89" Margin="55 0 55 40">
+                    <Border Grid.Column="2" CornerRadius="20" Padding="0 25" Margin="55 0 55 40">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#414868" Offset="0"/>
+                                <GradientStop Color="#24283b" Offset="0.5"/>
+                                <GradientStop Color="#1a1b26" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>

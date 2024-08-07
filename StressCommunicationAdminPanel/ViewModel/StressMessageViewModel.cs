@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
 using LiveChartsCore.SkiaSharpView.Painting;
+using System.Windows.Media;
 
 namespace StressCommunicationAdminPanel.ViewModel
 {
@@ -34,6 +35,10 @@ namespace StressCommunicationAdminPanel.ViewModel
     private string _connectionStatus;
 
     private IconChar _connectionStatusIcon;
+
+    private Brush _connectionStatusIconColor;
+
+    private Brush _connectionStatusColor;
 
     private bool _serverRunning = false;
 
@@ -65,6 +70,18 @@ namespace StressCommunicationAdminPanel.ViewModel
      
       set { _connectionStatusIcon = value; OnPropertyChanged(nameof(ConnectionStatusIcon)); }
     }
+    public Brush ConnectionStatusIconColor
+    {
+      get { return _connectionStatusIconColor; }
+
+      set { _connectionStatusIconColor = value; OnPropertyChanged(nameof(ConnectionStatusIconColor)); }
+    }
+    public Brush ConnectionStatusColor
+    {
+      get { return _connectionStatusColor; }
+     
+      set { _connectionStatusColor = value; OnPropertyChanged(nameof(ConnectionStatusColor)); }
+    }
     public int MessagesSent
     {
       get { return _messagesSent; }
@@ -84,6 +101,10 @@ namespace StressCommunicationAdminPanel.ViewModel
       ConnectionStatus = "Not Connected!!!";
 
       ConnectionStatusIcon = IconChar.UserSlash;
+
+      ConnectionStatusColor = new SolidColorBrush(Colors.Red);
+
+      ConnectionStatusIconColor = new SolidColorBrush(Colors.OrangeRed);
     }
     private void ConfigureStressMessagePieChartAttributes()
     {
@@ -93,7 +114,14 @@ namespace StressCommunicationAdminPanel.ViewModel
         {
           Name = "No Valid data",
           Values = new ObservableCollection<int> { 1 },
-          Fill =new SolidColorPaint(SKColor.Parse("#1a1b26"))
+          Stroke = new SolidColorPaint(SKColor.Parse("#414868")) { StrokeThickness = 3 },
+          Fill =new SolidColorPaint(SKColor.Parse("#1a1b26")),
+          DataLabelsPaint = new SolidColorPaint
+          {
+            FontFamily = "Perpetua",
+            SKFontStyle = new SKFontStyle(SKFontStyleWeight.ExtraBold, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic),
+            Color = SKColors.White
+          }
         }
       };
     }
@@ -146,6 +174,10 @@ namespace StressCommunicationAdminPanel.ViewModel
       _stressMessageTimer.Stop();
 
       ConnectionStatusIcon = IconChar.UserTimes;
+
+      ConnectionStatusColor = new SolidColorBrush(Colors.Red);
+
+      ConnectionStatusIconColor = new SolidColorBrush(Colors.OrangeRed);
     }
     private void SendBroadcastMessage()
     {
@@ -236,6 +268,10 @@ namespace StressCommunicationAdminPanel.ViewModel
 
         ConnectionStatusIcon = IconChar.UserCheck;
 
+        ConnectionStatusColor = new SolidColorBrush(Colors.Lime);
+
+        ConnectionStatusIconColor = new SolidColorBrush(Colors.Lime);
+
         Console.WriteLine("Client connected!");
 
         SendStressMessage(config);
@@ -303,9 +339,15 @@ namespace StressCommunicationAdminPanel.ViewModel
             Name = Enum.GetName(typeof(StressEffectType), type),
             Values = new ObservableCollection<int> { 0 },
             Fill = GetColorForStressType(type),
-            DataLabelsPaint = new SolidColorPaint(SKColors.Black),
             DataLabelsSize = 22,
-            DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle
+            Stroke = new SolidColorPaint(SKColor.Parse("#a9b1d6")) { StrokeThickness = 3 },
+            DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
+            DataLabelsPaint = new SolidColorPaint
+            {
+              FontFamily = "Perpetua",
+              SKFontStyle = new SKFontStyle(SKFontStyleWeight.ExtraBold, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic),
+              Color = SKColors.White
+            }
           });
         }
 
