@@ -1,6 +1,6 @@
 ﻿using FontAwesome.Sharp;
-using LiveCharts;
-using LiveCharts.Wpf;
+using LiveChartsCore.SkiaSharpView;
+using SkiaSharp;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using StressCommunicationAdminPanel.Command;
@@ -15,7 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
-using System.Windows.Media;
+using LiveChartsCore.SkiaSharpView.Painting;
 
 namespace StressCommunicationAdminPanel.ViewModel
 {
@@ -23,7 +23,7 @@ namespace StressCommunicationAdminPanel.ViewModel
   {
     private ObservableCollection<StressMessage> _messages = new ObservableCollection<StressMessage>();
 
-    private SeriesCollection _stressEffectMessagesSeriesCollection;
+    private ObservableCollection<PieSeries<int>> _stressEffectMessagesSeriesCollection;
 
     private UdpClient _client;
     
@@ -46,8 +46,8 @@ namespace StressCommunicationAdminPanel.ViewModel
 
       set { _messages = value; OnPropertyChanged(nameof(Messages)); }
     }
-   
-    public SeriesCollection StressEffectMessagesSeriesCollection
+
+    public ObservableCollection<PieSeries<int>> StressEffectMessagesSeriesCollection
     {
       get { return _stressEffectMessagesSeriesCollection; }
 
@@ -87,14 +87,13 @@ namespace StressCommunicationAdminPanel.ViewModel
     }
     private void ConfigureStressMessagePieChartAttributes()
     {
-      StressEffectMessagesSeriesCollection = new SeriesCollection
+      _stressEffectMessagesSeriesCollection = new ObservableCollection<PieSeries<int>>
       {
-        new PieSeries
+        new PieSeries<int>
         {
-          Title = "No Valid data",
-          Values = new ChartValues<int> { 1 },
-          Fill = new SolidColorBrush(Colors.Gray),
-          DataLabels = false
+          Name = "No Valid data",
+          Values = new ObservableCollection<int> { 1 },
+          Fill =new SolidColorPaint(SKColor.Parse("#1a1b26"))
         }
       };
     }
@@ -198,8 +197,6 @@ namespace StressCommunicationAdminPanel.ViewModel
 
         _stressMessageTimer.Elapsed += (sender, e) => OnStressMessageTimerElapsed(sender, e, config);
 
-        _stressMessageTimer.Start();
-
         var serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
         serverSocket.Bind(new IPEndPoint(IPAddress.Parse(config.ipAddress), config.stressMessageSendingPort));
@@ -241,7 +238,9 @@ namespace StressCommunicationAdminPanel.ViewModel
 
         Console.WriteLine("Client connected!");
 
-        await Task.Run(() => SendStressMessage(config));
+        SendStressMessage(config);
+
+        _stressMessageTimer.Start();
       }
       catch (Exception ex)
       {
@@ -265,8 +264,8 @@ namespace StressCommunicationAdminPanel.ViewModel
       try
       {
         var stressNotificationMessage = new StressNotificationMessage(
-         (StressEffectType)new Random().Next(0, 2),
-         new Random().Next(0, 2));
+         (StressEffectType)Random.Shared.Next(0, 3),
+         Random.Shared.Next(0, 2));
 
         string serializedMessage = JsonConvert.SerializeObject(stressNotificationMessage, new StringEnumConverter());
 
@@ -299,38 +298,53 @@ namespace StressCommunicationAdminPanel.ViewModel
 
         foreach (StressEffectType type in Enum.GetValues(typeof(StressEffectType)))
         {
-          StressEffectMessagesSeriesCollection.Add(new PieSeries
+          StressEffectMessagesSeriesCollection.Add(new PieSeries<int>
           {
-            Title = Enum.GetName(typeof(StressEffectType), type),
-            Values = new ChartValues<int> { 0 },
-            DataLabels = true,
-            Fill = GetColorForStressType(type)
+            Name = Enum.GetName(typeof(StressEffectType), type),
+            Values = new ObservableCollection<int> { 0 },
+            Fill = GetColorForStressType(type),
+            DataLabelsPaint = new SolidColorPaint(SKColors.Black),
+            DataLabelsSize = 22,
+            DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle
           });
         }
 
         _hasStressEffectMessage = true;
       }
 
-      var series = StressEffectMessagesSeriesCollection.FirstOrDefault(s => s.Title == Enum.GetName(typeof(StressEffectType), effectType));
-      
+      string effectTypeName = Enum.GetName(typeof(StressEffectType), effectType);
+
+      var series = StressEffectMessagesSeriesCollection.FirstOrDefault(s => s.Name == effectTypeName);
+
       if (series != null)
       {
-        ((ChartValues<int>)series.Values)[0]++;
+        var valuesCollection = series.Values as ObservableCollection<int>;
+
+        if (valuesCollection != null)
+        {
+          valuesCollection[0]++;
+        }
+        else
+        {
+          series.Values = new ObservableCollection<int> { series.Values.First() + 1 };
+        }
       }
     }
-    private SolidColorBrush GetColorForStressType(StressEffectType type)
+    private SolidColorPaint GetColorForStressType(StressEffectType type)
     {
       switch (type)
       {
         case StressEffectType.Mental:
-          return new SolidColorBrush(Colors.Blue);
+          return new SolidColorPaint(SKColor.Parse("#f7768e"));
         case StressEffectType.Emotional:
-          return new SolidColorBrush(Colors.Red);
+          return new SolidColorPaint(SKColor.Parse("#9ece6a"));
         case StressEffectType.Physical:
-          return new SolidColorBrush(Colors.Green);
+          return new SolidColorPaint(SKColor.Parse("#2ac3de"));
         default:
-          return new SolidColorBrush(Colors.Gray);
+          return new SolidColorPaint(SKColor.Parse("#1a1b26"));
       }
     }
   }
 }
+
+
