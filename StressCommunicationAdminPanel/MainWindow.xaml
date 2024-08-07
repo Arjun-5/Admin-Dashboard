@@ -121,8 +121,19 @@
                     <TextBlock Text="Keep Cool Adaptive VR : Admin Panel" FontSize="40" FontWeight="Bold" FontFamily="Perpetua" Foreground="#c0caf5"/>
                 </StackPanel>
 
-                <Border Width="50" Height="50" Background="#565f89" BorderBrush="OrangeRed" BorderThickness="2" CornerRadius="10" Margin="50 50 55 20" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Button Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Command="{Binding ToggleServerStateCommand}">
+                <Border Width="50" Height="50" BorderBrush="OrangeRed" BorderThickness="2" CornerRadius="10" Margin="50 50 55 20" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="#565f89"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#7a8bb4"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    
+                    <Button Command="{Binding ToggleServerStateCommand}" Style="{DynamicResource connectionButton}">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <fa:IconImage Icon="{Binding ConnectionStatusIcon}" Width="24" Height="24" Margin="5"/>
                         </StackPanel>
@@ -143,14 +154,14 @@
                     </uc:StressMessageInfoCard>
 
                     <uc:StressMessageInfoCard Grid.Column="1">
-                        <uc:StressMessageInfoCard CardTitle="Stress Message Sent" CardDescription="Messages Sent : 0" CardIcon="EnvelopeCircleCheck" CardIconColor="Black" 
+                        <uc:StressMessageInfoCard CardTitle="Stress Message Sent" CardMessageTitle="Messages Sent : " CardDescription="{Binding MessagesSent}" CardIcon="EnvelopeCircleCheck" CardIconColor="Black" 
                                                   CardBackgroundGradientLeft="#fd8a87" CardBackgroundGradientRight="#f3ab92"
                                                   CardEllipseBackgroundGradientLeft="#fbd5a8" CardEllipseBackgroundGradientRight="#fdb89b" 
                                                   CardStarFillColor="#9ece6a" CardStarStrokeColor="#24283b"/>
                     </uc:StressMessageInfoCard>
 
                     <uc:StressMessageInfoCard Grid.Column="2">
-                        <uc:StressMessageInfoCard CardTitle="Message from Client" CardDescription="Messages Received : 0" CardIcon="EnvelopeOpenText" CardIconColor="Black" 
+                        <uc:StressMessageInfoCard CardTitle="Message from Client" CardMessageTitle="Messages Received :" CardDescription="0" CardIcon="EnvelopeOpenText" CardIconColor="Black" 
                                                   CardBackgroundGradientLeft="#fc84cb" CardBackgroundGradientRight="#fc8fae"
                                                   CardEllipseBackgroundGradientLeft="#fc8fae" CardEllipseBackgroundGradientRight="#ffabe6" 
                                                   CardStarFillColor="#9ece6a" CardStarStrokeColor="#24283b"/>
@@ -175,9 +186,7 @@
                                 <TextBlock Text="Messages Sent" Style="{StaticResource titleText}"/>
                             </StackPanel>
 
-                            <lvc:PieChart Grid.Row="1" Series="{Binding MessagesSeries}">
-                                <!-- Define Pie Series properties here -->
-                            </lvc:PieChart>
+                            <lvc:PieChart Grid.Row="1" Series="{Binding StressEffectMessagesSeriesCollection}"/>
                         </Grid>
                     </Border>
 

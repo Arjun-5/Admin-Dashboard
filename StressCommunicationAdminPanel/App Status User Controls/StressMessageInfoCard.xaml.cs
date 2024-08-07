@@ -13,7 +13,6 @@ namespace StressCommunicationAdminPanel.App_Status_User_Controls
     public StressMessageInfoCard()
     {
       InitializeComponent();
-      DataContext = this;
     }
 
     public string CardTitle
@@ -43,6 +42,21 @@ namespace StressCommunicationAdminPanel.App_Status_User_Controls
     }
 
     public static readonly DependencyProperty CardDescriptionProperty = DependencyProperty.Register("CardDescription", typeof(string), typeof(StressMessageInfoCard));
+
+    public string CardMessageTitle
+    {
+      get
+      {
+        return (string)GetValue(CardMessageTitleProperty);
+      }
+      set
+      {
+        SetValue(CardMessageTitleProperty, value);
+      }
+    }
+
+    public static readonly DependencyProperty CardMessageTitleProperty = DependencyProperty.Register("CardMessageTitle", typeof(string), typeof(StressMessageInfoCard));
+
 
     public IconChar CardIcon
     {

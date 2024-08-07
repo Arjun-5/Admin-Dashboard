@@ -1,9 +1,11 @@
 ﻿using FontAwesome.Sharp;
+using LiveCharts;
+using LiveCharts.Wpf;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using StressCommunicationAdminPanel.Command;
 using StressCommunicationAdminPanel.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -13,13 +15,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace StressCommunicationAdminPanel.ViewModel
 {
   public class StressMessageViewModel : AppViewModel
   {
-    private ObservableCollection<StressMessage> _messages;
-    
+    private ObservableCollection<StressMessage> _messages = new ObservableCollection<StressMessage>();
+
+    private SeriesCollection _stressEffectMessagesSeriesCollection;
+
     private UdpClient _client;
     
     private Timer _stressMessageTimer;
@@ -30,12 +35,23 @@ namespace StressCommunicationAdminPanel.ViewModel
 
     private IconChar _connectionStatusIcon;
 
-    private bool _serverRunning;
+    private bool _serverRunning = false;
+
+    private int _messagesSent = 0;
+
+    private bool _hasStressEffectMessage = false;
     public ObservableCollection<StressMessage> Messages
     {
       get { return _messages; }
 
       set { _messages = value; OnPropertyChanged(nameof(Messages)); }
+    }
+   
+    public SeriesCollection StressEffectMessagesSeriesCollection
+    {
+      get { return _stressEffectMessagesSeriesCollection; }
+
+      set { _stressEffectMessagesSeriesCollection = value; OnPropertyChanged(nameof(StressEffectMessagesSeriesCollection)); }
     }
     public string ConnectionStatus
     {
@@ -49,19 +65,38 @@ namespace StressCommunicationAdminPanel.ViewModel
      
       set { _connectionStatusIcon = value; OnPropertyChanged(nameof(ConnectionStatusIcon)); }
     }
+    public int MessagesSent
+    {
+      get { return _messagesSent; }
+
+      set { _messagesSent = value; OnPropertyChanged(nameof(MessagesSent)); }
+    }
     public ICommand ToggleServerStateCommand { get; }
 
     public StressMessageViewModel()
     {
       Console.WriteLine("StressMessageViewModel Window Loaded");
 
-      _messages = new ObservableCollection<StressMessage>();
+      ConfigureStressMessagePieChartAttributes();
 
-      ToggleServerStateCommand = new RelayCommand(ManageServerState);
+       ToggleServerStateCommand = new RelayCommand(ManageServerState);
 
       ConnectionStatus = "Not Connected!!!";
 
       ConnectionStatusIcon = IconChar.UserSlash;
+    }
+    private void ConfigureStressMessagePieChartAttributes()
+    {
+      StressEffectMessagesSeriesCollection = new SeriesCollection
+      {
+        new PieSeries
+        {
+          Title = "No Valid data",
+          Values = new ChartValues<int> { 1 },
+          Fill = new SolidColorBrush(Colors.Gray),
+          DataLabels = false
+        }
+      };
     }
     private void ManageServerState()
     {
@@ -108,7 +143,9 @@ namespace StressCommunicationAdminPanel.ViewModel
       _client?.Close();
 
       ConnectionStatus = "Stopped";
-      
+
+      _stressMessageTimer.Stop();
+
       ConnectionStatusIcon = IconChar.UserTimes;
     }
     private void SendBroadcastMessage()
@@ -228,7 +265,7 @@ namespace StressCommunicationAdminPanel.ViewModel
       try
       {
         var stressNotificationMessage = new StressNotificationMessage(
-         (StressEffectType)new Random().Next(0, 4),
+         (StressEffectType)new Random().Next(0, 2),
          new Random().Next(0, 2));
 
         string serializedMessage = JsonConvert.SerializeObject(stressNotificationMessage, new StringEnumConverter());
@@ -237,17 +274,62 @@ namespace StressCommunicationAdminPanel.ViewModel
 
         Console.WriteLine("Sending stress notification: " + serializedMessage);
 
+        MessagesSent++;
+
         _clientSocket.Send(messageBytes);
 
         Messages.Add(new StressMessage
         {
-          TimeSent = DateTime.Now,
-          Message = serializedMessage
+          timeSent = DateTime.Now,
+          message = serializedMessage
         });
+
+        UpdateStressMessageSentPieChartData(stressNotificationMessage.currentStressEffect);
       }
       catch (SocketException ex)
       {
         Console.WriteLine($"SocketException: {ex.Message}");
+      }
+    }
+    private void UpdateStressMessageSentPieChartData(StressEffectType effectType)
+    {
+      if (!_hasStressEffectMessage)
+      {
+        StressEffectMessagesSeriesCollection.Clear();
+
+        foreach (StressEffectType type in Enum.GetValues(typeof(StressEffectType)))
+        {
+          StressEffectMessagesSeriesCollection.Add(new PieSeries
+          {
+            Title = Enum.GetName(typeof(StressEffectType), type),
+            Values = new ChartValues<int> { 0 },
+            DataLabels = true,
+            Fill = GetColorForStressType(type)
+          });
+        }
+
+        _hasStressEffectMessage = true;
+      }
+
+      var series = StressEffectMessagesSeriesCollection.FirstOrDefault(s => s.Title == Enum.GetName(typeof(StressEffectType), effectType));
+      
+      if (series != null)
+      {
+        ((ChartValues<int>)series.Values)[0]++;
+      }
+    }
+    private SolidColorBrush GetColorForStressType(StressEffectType type)
+    {
+      switch (type)
+      {
+        case StressEffectType.Mental:
+          return new SolidColorBrush(Colors.Blue);
+        case StressEffectType.Emotional:
+          return new SolidColorBrush(Colors.Red);
+        case StressEffectType.Physical:
+          return new SolidColorBrush(Colors.Green);
+        default:
+          return new SolidColorBrush(Colors.Gray);
       }
     }
   }

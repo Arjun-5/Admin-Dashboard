@@ -2,10 +2,8 @@
 {
   public enum StressEffectType
   {
-    Flies,
-    CameraShake,
-    Wind,
-    Overlay,
-    AudioLoop
+    Mental,
+    Physical,
+    Emotional
   }
 }

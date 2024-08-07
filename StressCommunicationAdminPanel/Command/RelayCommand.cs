@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StressCommunicationAdminPanel.ViewModel
+namespace StressCommunicationAdminPanel.Command
 {
   using System;
   using System.Windows.Input;

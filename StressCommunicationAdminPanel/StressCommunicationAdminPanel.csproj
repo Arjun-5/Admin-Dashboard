@@ -74,14 +74,15 @@
     <Compile Include="App Status User Controls\StressMessageInfoCard.xaml.cs">
       <DependentUpon>StressMessageInfoCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\StressEffectMessageData.cs" />
     <Compile Include="Model\StressEffectType.cs" />
     <Compile Include="Model\StressMessage.cs" />
     <Compile Include="Model\StressMessageConfig.cs" />
     <Compile Include="Model\StressNotificationMessage.cs" />
     <Compile Include="UserResponse.cs" />
     <Compile Include="ViewModel\AppViewModel.cs" />
-    <Compile Include="ViewModel\AsyncRelayCommand.cs" />
-    <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="Command\AsyncRelayCommand.cs" />
+    <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="ViewModel\StressMessageViewModel.cs" />
     <Page Include="App Status User Controls\StressMessageInfoCard.xaml">
       <SubType>Designer</SubType>
