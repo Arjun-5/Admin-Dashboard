@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace StressCommunicationAdminPanel.Command
+namespace StressCommunicationAdminPanel.Commands
 {
   public class AsyncRelayCommand : ICommand
   {

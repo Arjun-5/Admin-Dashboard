@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="StressCommunicationAdminPanel.Panel_User_Controls.AdminPanelContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:uc="clr-namespace:StressCommunicationAdminPanel.Panel_User_Controls"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             Background="Transparent">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Existing Grid Content -->
+        <Grid Grid.Row="1" Margin="50 20 30 40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <uc:StressMessageInfoCard Grid.Column="0">
+                <uc:StressMessageInfoCard CardTitle="Connection Status" CardDescription="{Binding ConnectionStatus}" CardIcon="Signal" CardIconColor="{Binding ConnectionStatusColor}" 
+                                          CardBackgroundGradientLeft="#827bff" CardBackgroundGradientRight="#e4bbff"
+                                          CardEllipseBackgroundGradientLeft="#b29afd" CardEllipseBackgroundGradientRight="#24283b" 
+                                          CardStarFillColor="#9ece6a" CardStarStrokeColor="#24283b"/>
+            </uc:StressMessageInfoCard>
+
+            <uc:StressMessageInfoCard Grid.Column="1">
+                <uc:StressMessageInfoCard CardTitle="Stress Message Sent" CardMessageTitle="Messages Sent : " CardDescription="{Binding MessagesSent}" CardIcon="EnvelopeCircleCheck" CardIconColor="Black" 
+                                          CardBackgroundGradientLeft="#ff9e64" CardBackgroundGradientRight="OrangeRed"
+                                          CardEllipseBackgroundGradientLeft="#e0af68" CardEllipseBackgroundGradientRight="#1a1b26" 
+                                          CardStarFillColor="#73daca" CardStarStrokeColor="#24283b"/>
+            </uc:StressMessageInfoCard>
+
+            <uc:StressMessageInfoCard Grid.Column="2">
+                <uc:StressMessageInfoCard CardTitle="Message from Client" CardMessageTitle="Messages Received :" CardDescription="0" CardIcon="EnvelopeOpenText" CardIconColor="Black" 
+                                          CardBackgroundGradientLeft="#2ac3de" CardBackgroundGradientRight="BlueViolet"
+                                          CardEllipseBackgroundGradientLeft="#7dcfff" CardEllipseBackgroundGradientRight="#1a1b26" 
+                                          CardStarFillColor="#ff9e64" CardStarStrokeColor="#24283b"/>
+            </uc:StressMessageInfoCard>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" CornerRadius="20" Padding="35 25" Margin="50 0 10 40">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#414868" Offset="0"/>
+                        <GradientStop Color="#24283b" Offset="0.5"/>
+                        <GradientStop Color="#1a1b26" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 25">
+                        <fa:IconImage Icon="EnvelopeCircleCheck" Style="{StaticResource titleIcon}"/>
+                        <TextBlock Text="Messages Sent" Style="{StaticResource titleText}"/>
+                    </StackPanel>
+
+                    <lvc:PieChart Grid.Row="1" Series="{Binding StressEffectMessagesSeriesCollection}"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1" CornerRadius="20" Padding="35 25" Margin="50 0 10 40">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#414868" Offset="0"/>
+                        <GradientStop Color="#24283b" Offset="0.5"/>
+                        <GradientStop Color="#1a1b26" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 25">
+                        <fa:IconImage Icon="EnvelopeOpenText" Style="{StaticResource titleIcon}"/>
+                        <TextBlock Text="Messages Received" Style="{StaticResource titleText}"/>
+                    </StackPanel>
+
+                    <lvc:PieChart Grid.Row="1" Series="{Binding MessagesSeries}">
+                        <!-- Define Pie Series properties here -->
+                    </lvc:PieChart>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="2" CornerRadius="20" Padding="0 25" Margin="55 0 55 40">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#414868" Offset="0"/>
+                        <GradientStop Color="#24283b" Offset="0.5"/>
+                        <GradientStop Color="#1a1b26" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Margin="20 0 0 15">
+                        <fa:IconImage Icon="CircleInfo" Style="{StaticResource titleIcon}"/>
+                        <TextBlock Text="Client Information" Style="{StaticResource titleText}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

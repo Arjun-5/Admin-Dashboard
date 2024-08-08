@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StressCommunicationAdminPanel.Model
+namespace StressCommunicationAdminPanel.Models
 {
   public class StressMessage
   {

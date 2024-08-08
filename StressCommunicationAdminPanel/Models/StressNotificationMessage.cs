@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace StressCommunicationAdminPanel.Model
+namespace StressCommunicationAdminPanel.Models
 {
   public class StressNotificationMessage
   {

@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace StressCommunicationAdminPanel.App_Status_User_Controls
+namespace StressCommunicationAdminPanel.Panel_User_Controls
 {
   /// <summary>
   /// Interaction logic for StressMessageInfoCard.xaml

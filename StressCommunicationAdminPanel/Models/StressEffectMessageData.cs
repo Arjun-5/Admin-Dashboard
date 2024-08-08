@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace StressCommunicationAdminPanel.Model
+namespace StressCommunicationAdminPanel.Models
 {
   public class StressEffectMessageData : INotifyPropertyChanged
   {

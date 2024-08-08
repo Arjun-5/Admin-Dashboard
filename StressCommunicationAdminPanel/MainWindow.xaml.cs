@@ -7,12 +7,8 @@ using System.Timers;
 using System;
 using System.Windows;
 using System.Windows.Input;
-using System.IO;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using StressCommunicationAdminPanel.Model;
-using StressCommunicationAdminPanel.ViewModel;
+using StressCommunicationAdminPanel.ViewModels;
+using StressCommunicationAdminPanel.Panel_User_Controls;
 
 namespace StressCommunicationAdminPanel
 {
@@ -38,9 +34,9 @@ namespace StressCommunicationAdminPanel
     {
       InitializeComponent();
 
-      Console.WriteLine("Main Window Loaded");
-
       DataContext = new StressMessageViewModel();
+
+      //MainContentControl.Content = new AdminPanelContent();
     }
     private void Border_MouseDownEvent(object sender, MouseButtonEventArgs e)
     {
@@ -53,6 +49,14 @@ namespace StressCommunicationAdminPanel
     {
       App.Current.Shutdown();
     }
+    private void AdminPanelButton_Click(object sender, RoutedEventArgs e)
+    {
+      //MainContentControl.Content = new AdminPanelContent();
+    }
 
+    private void StressMessageInfoPanelButton_Click(object sender, RoutedEventArgs e)
+    {
+      //MainContentControl.Content = new StressMessageInfoPanelContent();
+    }
   }
 }

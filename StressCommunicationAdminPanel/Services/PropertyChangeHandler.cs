@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace StressCommunicationAdminPanel.ViewModel
+namespace StressCommunicationAdminPanel.Services
 {
-  public class AppViewModel : INotifyPropertyChanged
+  public class PropertyChangeHandler : INotifyPropertyChanged
   {
     public event PropertyChangedEventHandler PropertyChanged;
 
