@@ -25,6 +25,8 @@ namespace StressCommunicationAdminPanel.Services
 
     private Action<StressNotificationMessage> _onUpdateChartContent;
 
+    private Action<IconChar, bool> _onHandleStatusBarState;
+
     private bool _serverRunning;
 
     private int _messagesSent;
@@ -42,11 +44,13 @@ namespace StressCommunicationAdminPanel.Services
         }
       }
     }
-    public StressMessageManager(Action<ServerState, IconChar, Brush, Brush> onServerStateChanged, Action<StressNotificationMessage> onUpdateChartContent)
+    public StressMessageManager(Action<ServerState, IconChar, Brush, Brush> onServerStateChanged, Action<StressNotificationMessage> onUpdateChartContent, Action<IconChar, bool> onHandleStatusBarState)
     {
       _onServerStateChanged = onServerStateChanged;
 
       _onUpdateChartContent = onUpdateChartContent;
+
+      _onHandleStatusBarState = onHandleStatusBarState;
     }
 
     public void ManageServerState()
@@ -94,6 +98,8 @@ namespace StressCommunicationAdminPanel.Services
       _stressMessageTimer?.Stop();
       
       UpdateServerState(ServerState.Stopped, IconChar.UserTimes, Brushes.Red, Brushes.OrangeRed);
+
+      _onHandleStatusBarState?.Invoke(IconChar.PlugCircleExclamation, false);
     }
 
     private void SendBroadcastMessage()
@@ -180,6 +186,8 @@ namespace StressCommunicationAdminPanel.Services
         }
 
         UpdateServerState(ServerState.Connected, IconChar.UserCheck, Brushes.Lime, Brushes.Lime);
+
+        _onHandleStatusBarState?.Invoke(IconChar.PlugCircleCheck, true);
         
         Console.WriteLine("Client connected!");
         

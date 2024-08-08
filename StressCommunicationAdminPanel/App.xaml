@@ -5,6 +5,7 @@
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+
         <Style x:Key="menuButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#c0caf5"/>
@@ -52,7 +53,6 @@
             <Setter Property="Height" Value="25"/>
             <Setter Property="Margin" Value="35 0 20 0"/>
             <Setter Property="Foreground" Value="{Binding Path= Tag, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"/>
-            
         </Style>
 
         <Style x:Key="menuButtonText" TargetType="TextBlock">
@@ -62,6 +62,20 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Foreground" Value="{Binding Path= Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"/>
 
+        </Style>
+
+        <Style x:Key="statusBarText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Perpetua"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="#c0caf5"/>
+        </Style>
+
+        <Style x:Key="statusBarIcon" TargetType="fa:IconImage">
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="Height" Value="16"/>
+            <Setter Property="Margin" Value="35 0 20 0"/>
         </Style>
 
         <Style x:Key="menuButtonActive" TargetType="Button">
@@ -123,6 +137,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
     </Application.Resources>
 </Application>

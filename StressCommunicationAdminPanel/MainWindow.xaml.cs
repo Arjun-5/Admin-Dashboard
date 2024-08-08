@@ -34,7 +34,7 @@ namespace StressCommunicationAdminPanel
     {
       InitializeComponent();
 
-      DataContext = new StressMessageViewModel();
+      DataContext = new StressMessageViewModel(messageProgressBar);
 
       //MainContentControl.Content = new AdminPanelContent();
     }

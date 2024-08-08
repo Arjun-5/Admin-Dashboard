@@ -15,9 +15,14 @@ namespace StressCommunicationAdminPanel.Helpers
 
     public ObservableCollection<PieSeries<int>> StressEffectMessagesSeriesCollection
     {
-      get { return _stressEffectMessagesSeriesCollection; }
+      get => _stressEffectMessagesSeriesCollection;
 
-      set { _stressEffectMessagesSeriesCollection = value; OnPropertyChanged(nameof(StressEffectMessagesSeriesCollection)); }
+      set
+      {
+        _stressEffectMessagesSeriesCollection = value;
+
+        OnPropertyChanged(nameof(StressEffectMessagesSeriesCollection));
+      }
     }
 
     private bool _hasReplacedDefaultData;
@@ -49,8 +54,10 @@ namespace StressCommunicationAdminPanel.Helpers
     }
     public void UpdatePieChartData(StressEffectType effectType)
     {
-      if (_hasReplacedDefaultData)
+      if (!_hasReplacedDefaultData)
       {
+        StressEffectMessagesSeriesCollection.Clear();
+
         InitializePieChartSeries();
 
         _hasReplacedDefaultData = true;
@@ -111,6 +118,5 @@ namespace StressCommunicationAdminPanel.Helpers
           return new SolidColorPaint(SKColor.Parse("#1a1b26"));
       }
     }
-
   }
 }

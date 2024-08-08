@@ -42,11 +42,11 @@
                         <TextBlock Text="Keep Cool Adaptive VR" FontSize="18" FontWeight="ExtraBold"  FontFamily="Perpetua" Margin="0 0 0 5" Foreground="#1a1b26"/>
                         <TextBlock Text="Stress Message Manager" FontSize="13"  FontFamily="Perpetua" Foreground="#24283b"/>
                     </StackPanel>
-                    
+
                 </StackPanel>
 
                 <Separator Height="0.9" Margin="20 30" Background="#24283b"/>
-                
+
                 <!-- Menu Buttons -->
                 <Button Style="{StaticResource menuButtonActive}" Command="{Binding ShowAdminPanelCommand}">
                     <StackPanel Orientation="Horizontal">
@@ -116,12 +116,13 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="200"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50 50 30 20">
                     <TextBlock Text="Keep Cool Adaptive VR : Admin Panel" FontSize="40" FontWeight="Bold" FontFamily="Perpetua" Foreground="#c0caf5"/>
                 </StackPanel>
-               
+
                 <Border Width="50" Height="50" BorderBrush="{Binding ConnectionStatusIconColor}" BorderThickness="2" CornerRadius="10" Margin="50 50 55 20" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <Border.Style>
                         <Style TargetType="Border">
@@ -249,45 +250,63 @@
                         </Grid>
                     </Border>
                 </Grid>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1030"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StatusBar Name="stressMessageProgessBar" VerticalAlignment="Bottom">
+                        <StatusBar.Background>
+                            <LinearGradientBrush StartPoint="0,0.25" EndPoint="1,1">
+                                <GradientStop Color="#565f89" Offset="0"/>
+                                <GradientStop Color="#414868" Offset="0.5"/>
+                                <GradientStop Color="#24283b" Offset="1"/>
+                            </LinearGradientBrush>
+                        </StatusBar.Background>
+                        <StatusBarItem Grid.Column="0"  Margin="5 0 0 0">
+                            <TextBlock Text="{Binding ConnectionStatus}" Style="{StaticResource statusBarText}"/>
+                        </StatusBarItem>
+
+                        <Separator Grid.Column="1" />
+
+                        <StatusBarItem Grid.Column="2" Margin="20 0 0 0">
+                            <TextBlock Text="Sending next Stress message in...." Style="{StaticResource statusBarText}"/>
+                        </StatusBarItem>
+
+                        <Separator Grid.Column="3" />
+
+                        <StatusBarItem Grid.Column="4" Margin="20 0 0 0">
+                            <ProgressBar Width="100" Height="20" Name="messageProgressBar">
+                                <!-- <ProgressBar.Background>
+                                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                                        <GradientStop Color="OrangeRed" Offset="0"/>
+                                        <GradientStop Color="#FF37FF00" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </ProgressBar.Background> -->
+                                <ProgressBar.Triggers>
+                                    <EventTrigger RoutedEvent="ProgressBar.Loaded">
+                                        <BeginStoryboard Name="statusBarStoryboard">
+                                            <Storyboard RepeatBehavior="110x">
+                                                <DoubleAnimation Storyboard.TargetName="messageProgressBar" Storyboard.TargetProperty="Value"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </ProgressBar.Triggers>
+                            </ProgressBar>
+                        </StatusBarItem>
+                        <Separator/>
+                        <!-- <StatusBarItem Margin="20 0 0 0">
+                            <TextBlock Text="Waiting to send..." Style="{StaticResource statusBarText}"/>
+                        </StatusBarItem> -->
+                        <StatusBarItem HorizontalAlignment="Right">
+                            <fa:IconImage Icon="{Binding StatusBarConnectionIcon}" Style="{StaticResource statusBarIcon}" Foreground="{Binding ConnectionStatusColor}" />
+                        </StatusBarItem>
+                    </StatusBar>
+                </Grid>
             </Grid>
         </Border>
     </Grid>
 </Window>
-
-
-<!-- <StatusBar Name="stressMessageProgessBar" VerticalAlignment="Bottom">
-                <StatusBar.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0.9,1">
-                        <GradientStop Color="#9aa5ce" Offset="0"/>
-                        <GradientStop Color="#414868" Offset="0.5"/>
-                        <GradientStop Color="#1a1b26" Offset="1"/>
-                    </LinearGradientBrush>
-                </StatusBar.Background>
-                <StatusBarItem Margin="5 0 0 0">
-                    <TextBlock Text="Not Connected!!!" Style="{StaticResource menuButtonText}"/>
-                </StatusBarItem>
-
-                <StatusBarItem Margin="20 0 0 0">
-                    <TextBlock Text="Sending next Stress message in...." Style="{StaticResource menuButtonText}"/>
-                </StatusBarItem>
-                <StatusBarItem Margin="20 0 0 0">
-                    <ProgressBar Width="100" Height="20" Name="messageProgressBar">
-                        <ProgressBar.Triggers>
-                            <EventTrigger RoutedEvent="ProgressBar.Loaded">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="messageProgressBar" Storyboard.TargetProperty="Value" From="0" To="100" Duration="0:0:30"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </ProgressBar.Triggers>
-                    </ProgressBar>
-                </StatusBarItem>
-                <Separator/>
-                <StatusBarItem Margin="20 0 0 0">
-                    <TextBlock Text="Waiting to send..." Style="{StaticResource menuButtonText}"/>
-                </StatusBarItem>
-                <StatusBarItem HorizontalAlignment="Right">
-                    <fa:IconImage Icon="Bell" Style="{StaticResource menuButtonIcon}"/>
-                </StatusBarItem>
-            </StatusBar> -->
