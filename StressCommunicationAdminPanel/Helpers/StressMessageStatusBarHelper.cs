@@ -1,10 +1,6 @@
 ﻿using FontAwesome.Sharp;
 using StressCommunicationAdminPanel.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -14,6 +10,8 @@ namespace StressCommunicationAdminPanel.Helpers
   public class StressMessageStatusBarHelper : PropertyChangeHandler
   {
     private IconChar _statusBarConnectionIcon;
+
+    private Storyboard _statusBarStoryboard;
     public IconChar StatusBarConnectionIcon
     {
       get => _statusBarConnectionIcon;
@@ -28,18 +26,34 @@ namespace StressCommunicationAdminPanel.Helpers
         }
       }
     }
-    private ProgressBar _messageProgressBar;
 
-    private DoubleAnimation _progressBarAnimation;
+    private ProgressBar _messageProgressBar;
     public StressMessageStatusBarHelper(ProgressBar messageProgressBar)
     {
       StatusBarConnectionIcon = IconChar.PlugCircleExclamation;
 
       _messageProgressBar = messageProgressBar;
 
-      Duration duration = new Duration(TimeSpan.FromSeconds(10));
+      var animation = new DoubleAnimation
+      {
+        From = 0,
+        To = 100,
+        Duration = new Duration(TimeSpan.FromSeconds(5)),
+        RepeatBehavior = RepeatBehavior.Forever
+      };
 
-      _progressBarAnimation = new DoubleAnimation(0.0, 100.0, duration);
+      if (_statusBarStoryboard == null)
+      {
+        _statusBarStoryboard = new Storyboard();
+
+        Storyboard.SetTarget(animation, messageProgressBar);
+        
+        Storyboard.SetTargetProperty(animation, new PropertyPath("Value"));
+        
+        _statusBarStoryboard.Children.Add(animation);
+      }
+
+      
     }
     public void UpdateStatusBarData(IconChar statusBarIcon, bool shouldActivateAnimation)
     {
@@ -49,10 +63,11 @@ namespace StressCommunicationAdminPanel.Helpers
       {
         //From = "0" To = "100" Duration = "0:0:30"
         case true:
-          _messageProgressBar.BeginAnimation(ProgressBar.ValueProperty, _progressBarAnimation);
+          _statusBarStoryboard.Begin();
           break;
         case false:
-          _messageProgressBar.Value = 0.0;
+          _statusBarStoryboard.Stop();
+          _messageProgressBar.Value = 0;
           break;
       }
     }

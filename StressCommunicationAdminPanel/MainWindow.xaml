@@ -254,10 +254,11 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1030"/>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
+
                     <StatusBar Name="stressMessageProgessBar" VerticalAlignment="Bottom">
                         <StatusBar.Background>
                             <LinearGradientBrush StartPoint="0,0.25" EndPoint="1,1">
@@ -266,7 +267,9 @@
                                 <GradientStop Color="#24283b" Offset="1"/>
                             </LinearGradientBrush>
                         </StatusBar.Background>
-                        <StatusBarItem Grid.Column="0"  Margin="5 0 0 0">
+
+          
+                        <StatusBarItem Grid.Column="0" Margin="5 0 0 0">
                             <TextBlock Text="{Binding ConnectionStatus}" Style="{StaticResource statusBarText}"/>
                         </StatusBarItem>
 
@@ -279,29 +282,19 @@
                         <Separator Grid.Column="3" />
 
                         <StatusBarItem Grid.Column="4" Margin="20 0 0 0">
-                            <ProgressBar Width="100" Height="20" Name="messageProgressBar">
-                                <!-- <ProgressBar.Background>
-                                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                            <ProgressBar Width="100" Height="20" Name="messageProgressBar" Value="0" Maximum="100">
+                                <ProgressBar.Foreground>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                         <GradientStop Color="OrangeRed" Offset="0"/>
-                                        <GradientStop Color="#FF37FF00" Offset="1"/>
+                                        <GradientStop Color="LimeGreen" Offset="1"/>
                                     </LinearGradientBrush>
-                                </ProgressBar.Background> -->
-                                <ProgressBar.Triggers>
-                                    <EventTrigger RoutedEvent="ProgressBar.Loaded">
-                                        <BeginStoryboard Name="statusBarStoryboard">
-                                            <Storyboard RepeatBehavior="110x">
-                                                <DoubleAnimation Storyboard.TargetName="messageProgressBar" Storyboard.TargetProperty="Value"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                </ProgressBar.Triggers>
+                                </ProgressBar.Foreground>
                             </ProgressBar>
                         </StatusBarItem>
-                        <Separator/>
-                        <!-- <StatusBarItem Margin="20 0 0 0">
-                            <TextBlock Text="Waiting to send..." Style="{StaticResource statusBarText}"/>
-                        </StatusBarItem> -->
-                        <StatusBarItem HorizontalAlignment="Right">
+
+                        <Separator Grid.Column="5" />
+
+                        <StatusBarItem Grid.Column="6" HorizontalAlignment="Right">
                             <fa:IconImage Icon="{Binding StatusBarConnectionIcon}" Style="{StaticResource statusBarIcon}" Foreground="{Binding ConnectionStatusColor}" />
                         </StatusBarItem>
                     </StatusBar>
