@@ -10,6 +10,9 @@ using Newtonsoft.Json;
 using StressCommunicationAdminPanel.Models;
 using System.Windows.Media;
 using System.IO;
+using System.Threading;
+using Timer = System.Timers.Timer;
+using StressCommunicationAdminPanel.Helpers;
 
 namespace StressCommunicationAdminPanel.Services
 {
@@ -26,6 +29,8 @@ namespace StressCommunicationAdminPanel.Services
     private Action<StressNotificationMessage> _onUpdateChartContent;
 
     private Action<IconChar, bool> _onHandleStatusBarState;
+
+    private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
     private bool _serverRunning;
 
@@ -58,6 +63,14 @@ namespace StressCommunicationAdminPanel.Services
       if (_serverRunning)
       {
         StopServer();
+
+        var stressNotificationMessage = new StressNotificationMessage(StressEffectCategory.None, -1, !_serverRunning);
+
+        string serializedMessage = JsonConvert.SerializeObject(stressNotificationMessage, new StringEnumConverter());
+
+        byte[] messageBytes = Encoding.ASCII.GetBytes(serializedMessage);
+
+        _clientSocket.Send(messageBytes);
       }
       else
       {
@@ -88,7 +101,7 @@ namespace StressCommunicationAdminPanel.Services
     private void StopServer()
     {
       _serverRunning = false;
-     
+
       _clientSocket?.Shutdown(SocketShutdown.Both);
       
       _clientSocket?.Close();
@@ -192,8 +205,13 @@ namespace StressCommunicationAdminPanel.Services
         Console.WriteLine("Client connected!");
         
         SendStressMessage(config);
-        
+
         _stressMessageTimer.Start();
+
+        await Task.Run(() =>
+        {
+          ReceiveMessagesFromClient(_cancellationTokenSource.Token);
+        }, _cancellationTokenSource.Token);
       }
       catch (Exception ex)
       {
@@ -220,8 +238,8 @@ namespace StressCommunicationAdminPanel.Services
         double randomValue = Random.Shared.NextDouble();
 
         var stressNotificationMessage = new StressNotificationMessage(
-            (StressEffectCategory)Random.Shared.Next(0, 3),
-            Math.Round(randomValue * 1.01, 2));
+            (StressEffectCategory)Random.Shared.Next(1, 4),
+            Math.Round(randomValue * 1.01, 2), !_serverRunning);
 
         string serializedMessage = JsonConvert.SerializeObject(stressNotificationMessage, new StringEnumConverter());
         
@@ -240,7 +258,47 @@ namespace StressCommunicationAdminPanel.Services
         Console.WriteLine($"SocketException: {ex.Message}");
       }
     }
+    private async void ReceiveMessagesFromClient(CancellationToken cancellationToken)
+    {
+      while(!cancellationToken.IsCancellationRequested)
+      {
+        try
+        {
+          byte[] buffer = new byte[1024];
 
+          var receiveSocketEventArgs = new SocketAsyncEventArgs();
+
+          receiveSocketEventArgs.SetBuffer(buffer,0,buffer.Length);
+
+          //receiveSocketEventArgs.Completed += OnReceiveCompleted;
+
+          //int clientBytes = await _clientSocket.ReceiveAsync(temp);
+
+          //string clientMessage = Encoding.ASCII.GetString(temp, 0, clientBytes);
+
+          //Console.WriteLine($"Client Message Received: {clientMessage}");
+
+/*          var isConnectionCancelled = ConnectionStatus.DeserializeData(clientMessage);
+
+          Console.WriteLine($"Is connection cancelled: {isConnectionCancelled}");*/
+
+          _cancellationTokenSource.Cancel();
+         /* if (isConnectionCancelled)
+          {
+            _cancellationTokenSource.Cancel();
+          }*/
+        }
+        catch (SocketException ex)
+        {
+          Console.WriteLine($"SocketException: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+          Console.WriteLine($"Exception Occured: {ex.Message}");
+        }
+      }
+      StopServer();
+    }
     private void UpdateServerState(ServerState state, IconChar icon, Brush color, Brush iconColor)
     {
       _onServerStateChanged?.Invoke(state, icon, color, iconColor);
