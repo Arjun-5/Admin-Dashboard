@@ -183,7 +183,7 @@ namespace StressCommunicationAdminPanel.ViewModels
     }
     private void OnUpdateAdminPanelCharts(StressNotificationMessage message)
     {
-      _pieChartHelper.UpdatePieChartData(message.currentStressEffect);
+      _pieChartHelper.UpdatePieChartData(message.currentStressCategory);
     }
     private void OnUpdateStatusBarContent(IconChar icon, bool progressBarAnimationState)
     {

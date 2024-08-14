@@ -217,9 +217,11 @@ namespace StressCommunicationAdminPanel.Services
 
       try
       {
+        double randomValue = Random.Shared.NextDouble();
+
         var stressNotificationMessage = new StressNotificationMessage(
-            (StressEffectType)Random.Shared.Next(0, 3),
-            Random.Shared.Next(0, 2));
+            (StressEffectCategory)Random.Shared.Next(0, 3),
+            Math.Round(randomValue * 1.01, 2));
 
         string serializedMessage = JsonConvert.SerializeObject(stressNotificationMessage, new StringEnumConverter());
         

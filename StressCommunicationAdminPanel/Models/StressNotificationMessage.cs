@@ -6,13 +6,13 @@ namespace StressCommunicationAdminPanel.Models
   public class StressNotificationMessage
   {
     [JsonConverter(typeof(StringEnumConverter))]
-    public StressEffectType currentStressEffect;
+    public StressEffectCategory currentStressCategory;
 
-    public float stressLevel;
+    public double stressLevel;
 
-    public StressNotificationMessage(StressEffectType currentStressEffect, float stressLevel)
+    public StressNotificationMessage(StressEffectCategory currentStressCategory, double stressLevel)
     {
-      this.currentStressEffect = currentStressEffect;
+      this.currentStressCategory = currentStressCategory;
       
       this.stressLevel = stressLevel;
     }

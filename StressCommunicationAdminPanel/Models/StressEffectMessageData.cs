@@ -5,7 +5,7 @@ namespace StressCommunicationAdminPanel.Models
   public class StressEffectMessageData : INotifyPropertyChanged
   {
     private int _messageCount;
-    public StressEffectType effectType { get; set; }
+    public StressEffectCategory effectType { get; set; }
 
     public int messageCount
     {

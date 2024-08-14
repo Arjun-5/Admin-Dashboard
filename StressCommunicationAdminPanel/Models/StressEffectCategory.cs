@@ -1,6 +1,6 @@
 ﻿namespace StressCommunicationAdminPanel.Models
 {
-  public enum StressEffectType
+  public enum StressEffectCategory
   {
     Mental,
     Physical,

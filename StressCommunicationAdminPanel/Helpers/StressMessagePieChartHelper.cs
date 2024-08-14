@@ -52,7 +52,7 @@ namespace StressCommunicationAdminPanel.Helpers
 
       _hasReplacedDefaultData = false;
     }
-    public void UpdatePieChartData(StressEffectType effectType)
+    public void UpdatePieChartData(StressEffectCategory effectCategory)
     {
       if (!_hasReplacedDefaultData)
       {
@@ -62,7 +62,7 @@ namespace StressCommunicationAdminPanel.Helpers
 
         _hasReplacedDefaultData = true;
       }
-      string effectTypeName = Enum.GetName(typeof(StressEffectType), effectType);
+      string effectTypeName = Enum.GetName(typeof(StressEffectCategory), effectCategory);
 
       var series = StressEffectMessagesSeriesCollection.FirstOrDefault(s => s.Name == effectTypeName);
 
@@ -85,7 +85,7 @@ namespace StressCommunicationAdminPanel.Helpers
 
     private void InitializePieChartSeries()
     {
-      foreach (StressEffectType type in Enum.GetValues(typeof(StressEffectType)))
+      foreach (StressEffectCategory type in Enum.GetValues(typeof(StressEffectCategory)))
       {
         StressEffectMessagesSeriesCollection.Add(new PieSeries<int>
         {
@@ -104,15 +104,15 @@ namespace StressCommunicationAdminPanel.Helpers
         });
       }
     }
-    private SolidColorPaint GetColorForStressType(StressEffectType type)
+    private SolidColorPaint GetColorForStressType(StressEffectCategory type)
     {
       switch (type)
       {
-        case StressEffectType.Mental:
+        case StressEffectCategory.Mental:
           return new SolidColorPaint(SKColor.Parse("#f7768e"));
-        case StressEffectType.Emotional:
+        case StressEffectCategory.Emotional:
           return new SolidColorPaint(SKColor.Parse("#9ece6a"));
-        case StressEffectType.Physical:
+        case StressEffectCategory.Physical:
           return new SolidColorPaint(SKColor.Parse("#2ac3de"));
         default:
           return new SolidColorPaint(SKColor.Parse("#1a1b26"));
