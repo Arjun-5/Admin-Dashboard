@@ -37,7 +37,7 @@ namespace StressCommunicationAdminPanel.Helpers
       {
         new PieSeries<int>
         {
-          Name = "No Valid data",
+          Name = Enum.GetName(StressEffectCategory.None),
           Values = new ObservableCollection<int> { 1 },
           Stroke = new SolidColorPaint(SKColor.Parse("#414868")) { StrokeThickness = 3 },
           Fill = new SolidColorPaint(SKColor.Parse("#1a1b26")),

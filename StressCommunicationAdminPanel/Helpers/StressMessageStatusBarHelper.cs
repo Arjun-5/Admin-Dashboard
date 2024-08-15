@@ -61,7 +61,6 @@ namespace StressCommunicationAdminPanel.Helpers
 
       switch (shouldActivateAnimation)
       {
-        //From = "0" To = "100" Duration = "0:0:30"
         case true:
           _statusBarStoryboard.Begin();
           break;

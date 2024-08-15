@@ -276,7 +276,7 @@
                         <Separator Grid.Column="1" />
 
                         <StatusBarItem Grid.Column="2" Margin="20 0 0 0">
-                            <TextBlock Text="Sending next Stress message in...." Style="{StaticResource statusBarText}"/>
+                            <TextBlock Text="Sending next Stress message in...." Style="{StaticResource statusBarText}" FontFamily="Amiri"/>
                         </StatusBarItem>
 
                         <Separator Grid.Column="3" />
@@ -286,7 +286,7 @@
                                 <ProgressBar.Foreground>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                         <GradientStop Color="OrangeRed" Offset="0"/>
-                                        <GradientStop Color="LimeGreen" Offset="1"/>
+                                        <GradientStop Color="Lime" Offset="1"/>
                                     </LinearGradientBrush>
                                 </ProgressBar.Foreground>
                             </ProgressBar>

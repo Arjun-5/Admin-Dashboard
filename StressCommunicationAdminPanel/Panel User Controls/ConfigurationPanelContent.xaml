@@ -7,6 +7,23 @@
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              Background="Transparent">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Margin="50 20 30 40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <Border BorderThickness="2" BorderBrush="Black" Background="LightGray" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"> IP Address ": </TextBlock>
+                </Border>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

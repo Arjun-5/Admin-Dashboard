@@ -13,6 +13,8 @@ using System.IO;
 using System.Threading;
 using Timer = System.Timers.Timer;
 using StressCommunicationAdminPanel.Helpers;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace StressCommunicationAdminPanel.Services
 {
@@ -58,19 +60,23 @@ namespace StressCommunicationAdminPanel.Services
       _onHandleStatusBarState = onHandleStatusBarState;
     }
 
-    public void ManageServerState()
+    public async void ManageServerState()
     {
       if (_serverRunning)
       {
-        StopServer();
-
         var stressNotificationMessage = new StressNotificationMessage(StressEffectCategory.None, -1, !_serverRunning);
 
         string serializedMessage = JsonConvert.SerializeObject(stressNotificationMessage, new StringEnumConverter());
 
         byte[] messageBytes = Encoding.ASCII.GetBytes(serializedMessage);
 
-        _clientSocket.Send(messageBytes);
+        await _clientSocket.SendAsync(messageBytes);
+
+        StopServer();
+
+        _cancellationTokenSource.Cancel();
+
+        _cancellationTokenSource.Dispose();
       }
       else
       {
@@ -189,7 +195,7 @@ namespace StressCommunicationAdminPanel.Services
             
             return null;
           }
-        });
+        },_cancellationTokenSource.Token);
 
         if (_clientSocket == null)
         {
@@ -266,27 +272,16 @@ namespace StressCommunicationAdminPanel.Services
         {
           byte[] buffer = new byte[1024];
 
-          var receiveSocketEventArgs = new SocketAsyncEventArgs();
+          int bytesReceived = await _clientSocket.ReceiveAsync(new ArraySegment<byte>(buffer),SocketFlags.None);
 
-          receiveSocketEventArgs.SetBuffer(buffer,0,buffer.Length);
+          string clientMessage = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
 
-          //receiveSocketEventArgs.Completed += OnReceiveCompleted;
+          var isConnectionCancelled = ConnectionStatus.DeserializeData(clientMessage);
 
-          //int clientBytes = await _clientSocket.ReceiveAsync(temp);
-
-          //string clientMessage = Encoding.ASCII.GetString(temp, 0, clientBytes);
-
-          //Console.WriteLine($"Client Message Received: {clientMessage}");
-
-/*          var isConnectionCancelled = ConnectionStatus.DeserializeData(clientMessage);
-
-          Console.WriteLine($"Is connection cancelled: {isConnectionCancelled}");*/
-
-          _cancellationTokenSource.Cancel();
-         /* if (isConnectionCancelled)
+          if (isConnectionCancelled)
           {
             _cancellationTokenSource.Cancel();
-          }*/
+          }
         }
         catch (SocketException ex)
         {
@@ -297,7 +292,7 @@ namespace StressCommunicationAdminPanel.Services
           Console.WriteLine($"Exception Occured: {ex.Message}");
         }
       }
-      StopServer();
+      _ =   Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>StopServer() ));
     }
     private void UpdateServerState(ServerState state, IconChar icon, Brush color, Brush iconColor)
     {
