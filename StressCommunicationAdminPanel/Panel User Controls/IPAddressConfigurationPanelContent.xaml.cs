@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using StressCommunicationAdminPanel.Commands;
-using System.ComponentModel;
+﻿using StressCommunicationAdminPanel.Commands;
 using System.IO;
 using System.Text.Json;
 using System.Windows.Input;
 
 namespace StressCommunicationAdminPanel.Panel_User_Controls
 {
-  public class IpAddressConfigViewModel : INotifyPropertyChanged
+  public partial class IPAddressConfigurationPanelContent : CustomViewUserControl
   {
     private string _ipAddress;
+
     private string _portNumber;
+
     private string _timeout;
 
     public string IpAddress
@@ -36,9 +34,12 @@ namespace StressCommunicationAdminPanel.Panel_User_Controls
     public ICommand SaveCommand { get; }
     public ICommand ClearCommand { get; }
 
-    public IpAddressConfigViewModel()
+    public IPAddressConfigurationPanelContent()
     {
+      InitializeComponent();
+
       SaveCommand = new RelayCommand(SaveSettings);
+      
       ClearCommand = new RelayCommand(ClearSettings);
     }
 
@@ -52,20 +53,17 @@ namespace StressCommunicationAdminPanel.Panel_User_Controls
       };
 
       string json = JsonSerializer.Serialize(config);
+
       File.WriteAllText("config.json", json);
     }
 
     private void ClearSettings()
     {
       IpAddress = string.Empty;
-      PortNumber = string.Empty;
-      Timeout = string.Empty;
-    }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+      PortNumber = string.Empty;
+
+      Timeout = string.Empty;
     }
   }
 }

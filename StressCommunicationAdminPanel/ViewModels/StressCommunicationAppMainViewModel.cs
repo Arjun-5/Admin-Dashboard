@@ -18,7 +18,7 @@ namespace StressCommunicationAdminPanel.ViewModels
       }
     }
     public ICommand ShowAdminPanelCommand { get; }
-    public ICommand ShowConfigurationPanelCommand { get; }
+    public ICommand ShowConfigurationControlPanelCommand { get; }
     public StressMessageViewModel StressMessageViewModel { get; }
 
     public StressCommunicationAppMainViewModel(ProgressBar messageProgressBar)
@@ -26,8 +26,8 @@ namespace StressCommunicationAdminPanel.ViewModels
       StressMessageViewModel = new StressMessageViewModel(messageProgressBar);
 
       ShowAdminPanelCommand = new RelayCommand(ShowAdminPanel);
-      
-      ShowConfigurationPanelCommand = new RelayCommand(ShowConfigurationPanel);
+
+      ShowConfigurationControlPanelCommand = new RelayCommand(ShowConfigurationControlPanel);
 
       CurrentView = new AdminPanelContent { DataContext = StressMessageViewModel };
     }
@@ -37,9 +37,9 @@ namespace StressCommunicationAdminPanel.ViewModels
       CurrentView = new AdminPanelContent { DataContext = StressMessageViewModel };
     }
 
-    private void ShowConfigurationPanel()
+    private void ShowConfigurationControlPanel()
     {
-      CurrentView = new ConfigurationPanelContent { DataContext = StressMessageViewModel };
+      CurrentView = new IPAddressConfigurationPanelContent { DataContext = StressMessageViewModel };
     }
   }
 }

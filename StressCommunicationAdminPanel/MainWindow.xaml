@@ -9,7 +9,7 @@
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         xmlns:panelUserControl ="clr-namespace:StressCommunicationAdminPanel.Panel_User_Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="740" Width="1280" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+        Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
@@ -64,7 +64,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Style="{StaticResource menuButton}" Command="{Binding ShowConfigurationPanelCommand}">
+                <Button Style="{StaticResource menuButton}" Command="{Binding ShowConfigurationControlPanelCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="ScrewdriverWrench" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="Configure IP Address" Style="{StaticResource menuButtonText}"/>
@@ -165,7 +165,7 @@
                             </LinearGradientBrush>
                         </StatusBar.Background>
 
-          
+
                         <StatusBarItem Grid.Column="0" Margin="5 0 0 0">
                             <TextBlock Text="{Binding StressMessageViewModel.ConnectionStatus}" Style="{StaticResource statusBarText}"/>
                         </StatusBarItem>

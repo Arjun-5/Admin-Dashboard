@@ -292,7 +292,7 @@ namespace StressCommunicationAdminPanel.Services
           Console.WriteLine($"Exception Occured: {ex.Message}");
         }
       }
-      _ =   Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>StopServer() ));
+      _ =   Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => StopServer() ));
     }
     private void UpdateServerState(ServerState state, IconChar icon, Brush color, Brush iconColor)
     {
