@@ -34,9 +34,7 @@ namespace StressCommunicationAdminPanel
     {
       InitializeComponent();
 
-      DataContext = new StressMessageViewModel(messageProgressBar);
-
-      //MainContentControl.Content = new AdminPanelContent();
+      DataContext = new StressCommunicationAppMainViewModel(messageProgressBar);
     }
     private void Border_MouseDownEvent(object sender, MouseButtonEventArgs e)
     {
@@ -48,15 +46,6 @@ namespace StressCommunicationAdminPanel
     private void MainWindow_Close(object sender, RoutedEventArgs e)
     {
       App.Current.Shutdown();
-    }
-    private void AdminPanelButton_Click(object sender, RoutedEventArgs e)
-    {
-      //MainContentControl.Content = new AdminPanelContent();
-    }
-
-    private void StressMessageInfoPanelButton_Click(object sender, RoutedEventArgs e)
-    {
-      //MainContentControl.Content = new StressMessageInfoPanelContent();
     }
   }
 }

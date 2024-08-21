@@ -1,17 +1,17 @@
 ﻿using FontAwesome.Sharp;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using System.Windows.Media;
 using StressCommunicationAdminPanel.Models;
 using StressCommunicationAdminPanel.Services;
 using StressCommunicationAdminPanel.Helpers;
-using StressCommunicationAdminPanel.Commands;
 using LiveChartsCore.SkiaSharpView;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Input;
+using StressCommunicationAdminPanel.Commands;
 
 namespace StressCommunicationAdminPanel.ViewModels
 {
@@ -46,7 +46,8 @@ namespace StressCommunicationAdminPanel.ViewModels
         OnPropertyChanged(nameof(Messages));
       }
     }
-
+    public ICommand ToggleServerStateCommand { get; }
+    public StressMessageManager MessageManager => _messageManager;
     public ObservableCollection<PieSeries<int>> StressEffectMessagesSeriesCollection => _pieChartHelper.StressEffectMessagesSeriesCollection;
 
     public int MessagesSent => _messageManager.MessagesSent;
@@ -110,8 +111,6 @@ namespace StressCommunicationAdminPanel.ViewModels
         OnPropertyChanged(nameof(ConnectionStatusColor));
       }
     }
-    public ICommand ToggleServerStateCommand { get; }
-
     public StressMessageViewModel(ProgressBar messageProgressBar)
     {
       _messageManager = new StressMessageManager(OnServerStateChanged, OnUpdateAdminPanelCharts, OnUpdateStatusBarContent);
