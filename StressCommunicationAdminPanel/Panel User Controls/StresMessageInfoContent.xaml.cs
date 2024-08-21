@@ -2,9 +2,9 @@
 
 namespace StressCommunicationAdminPanel.Panel_User_Controls
 {
-  public partial class AdminPanelContent : UserControl
+  public partial class StresMessageInfoContent : UserControl
   {
-    public AdminPanelContent()
+    public StresMessageInfoContent()
     {
       InitializeComponent();
     }

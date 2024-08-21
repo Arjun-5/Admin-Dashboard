@@ -60,7 +60,7 @@
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="FontFamily" Value="Perpetua"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="#c0caf5"/>
+            <Setter Property="Foreground" Value="#cfc9c2"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Tag"  Value="#1a1b26"/>
             <Setter Property="Template">
@@ -107,17 +107,20 @@
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderBrush" Value="#cfc9c2"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="30"/>
             <Setter Property="FontFamily" Value="Perpetua"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <Border CornerRadius="3" Background="#24283b" BorderBrush="#565f89" BorderThickness="1" />
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden"/>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Foreground" Value="#c0caf5"/>
         </Style>
 
         <Style x:Key="actionButtonText" TargetType="TextBlock">
@@ -125,7 +128,7 @@
             <Setter Property="FontFamily" Value="Perpetua"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Foreground" Value="#c0caf5"/>
+            <Setter Property="Foreground" Value="#cfc9c2"/>
         </Style>
 
         <Style x:Key="menuButtonIcon" TargetType="fa:IconImage">

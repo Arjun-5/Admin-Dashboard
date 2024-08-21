@@ -22,7 +22,6 @@ namespace StressCommunicationAdminPanel
   /// Send task message containing tasks
   /// Send stress effects
   /// Add view model for different views
-  /// View model for adding config value - text box to display the current Ip address, timer interval and port number
   /// view model for showing graph data for velocity and accleration and time stamp
   /// view model for showing graph data for self record stress value based on time stamp 
   /// view model for showing graph data for task start time and task end time

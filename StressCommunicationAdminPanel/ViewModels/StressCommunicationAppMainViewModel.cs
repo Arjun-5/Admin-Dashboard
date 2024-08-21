@@ -11,35 +11,64 @@ namespace StressCommunicationAdminPanel.ViewModels
     public object CurrentView
     {
       get => _currentView;
+
       set
       {
         _currentView = value;
+
         OnPropertyChanged(nameof(CurrentView));
       }
     }
     public ICommand ShowAdminPanelCommand { get; }
+
     public ICommand ShowConfigurationControlPanelCommand { get; }
-    public StressMessageViewModel StressMessageViewModel { get; }
+
+    public ICommand ShowStresMessageInfoContentPanelCommand { get; }
+    
+    public StressMessageViewModel stressMessageViewModel { get; }
+
+    public StresMessageInfoContentViewModel stresMessageInfoContentViewModel { get; }
+
+    public IPAddressConfigurationViewModel ipAddressConfigurationViewModel { get; }
 
     public StressCommunicationAppMainViewModel(ProgressBar messageProgressBar)
     {
-      StressMessageViewModel = new StressMessageViewModel(messageProgressBar);
+      stresMessageInfoContentViewModel = new StresMessageInfoContentViewModel();
+
+      stressMessageViewModel = new StressMessageViewModel(messageProgressBar, stresMessageInfoContentViewModel.UpdateStressMessageInfoDataTable);
+
+      ipAddressConfigurationViewModel = new IPAddressConfigurationViewModel();
 
       ShowAdminPanelCommand = new RelayCommand(ShowAdminPanel);
 
       ShowConfigurationControlPanelCommand = new RelayCommand(ShowConfigurationControlPanel);
 
-      CurrentView = new AdminPanelContent { DataContext = StressMessageViewModel };
+      ShowStresMessageInfoContentPanelCommand = new RelayCommand(ShowStresMessageInfoContentPanel);
+
+      CurrentView = new AdminPanelContent { DataContext = stressMessageViewModel };
     }
 
     private void ShowAdminPanel()
     {
-      CurrentView = new AdminPanelContent { DataContext = StressMessageViewModel };
+      CurrentView = new AdminPanelContent { DataContext = stressMessageViewModel };
     }
 
     private void ShowConfigurationControlPanel()
     {
-      CurrentView = new IPAddressConfigurationPanelContent { DataContext = StressMessageViewModel };
+      CurrentView = new IPAddressConfigurationPanelContent
+      (
+        () =>
+        {
+          ipAddressConfigurationViewModel.ReadAndSetConfigDefaultValue();
+        }
+      )
+      { 
+        DataContext = ipAddressConfigurationViewModel
+      };
+    }
+    private void ShowStresMessageInfoContentPanel()
+    {
+      CurrentView = new StresMessageInfoContent { DataContext = stresMessageInfoContentViewModel };
     }
   }
 }

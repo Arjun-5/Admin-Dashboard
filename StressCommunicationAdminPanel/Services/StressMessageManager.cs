@@ -9,7 +9,6 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 using StressCommunicationAdminPanel.Models;
 using System.Windows.Media;
-using System.IO;
 using System.Threading;
 using Timer = System.Timers.Timer;
 using StressCommunicationAdminPanel.Helpers;
@@ -92,7 +91,7 @@ namespace StressCommunicationAdminPanel.Services
 
       SendBroadcastMessage();
       
-      var config = LoadConfig();
+      var config = ConfigHandler.LoadConfig();
 
       if (config != null)
       {
@@ -134,24 +133,6 @@ namespace StressCommunicationAdminPanel.Services
       Console.WriteLine("Broadcast Message Sent...");
       
       _client.Close();
-    }
-
-    private StressMessageConfig LoadConfig()
-    {
-      string configFileLocation = Path.Combine(Environment.CurrentDirectory, "StressMessageConfig.json");
-
-      try
-      {
-        var processedConfigData = File.ReadAllText(configFileLocation);
-
-        return JsonConvert.DeserializeObject<StressMessageConfig>(processedConfigData);
-      }
-      catch (Exception ex)
-      {
-        Console.WriteLine($"Error loading config: {ex.Message}");
-        
-        return null;
-      }
     }
 
     private async Task SetupConnectionParameters(StressMessageConfig config)

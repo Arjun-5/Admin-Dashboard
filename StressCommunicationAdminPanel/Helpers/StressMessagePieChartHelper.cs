@@ -109,13 +109,21 @@ namespace StressCommunicationAdminPanel.Helpers
       switch (type)
       {
         case StressEffectCategory.Mental:
-          return new SolidColorPaint(SKColor.Parse("#f7768e"));
+          {
+            return new SolidColorPaint(SKColor.Parse("#f7768e"));
+          }
         case StressEffectCategory.Emotional:
-          return new SolidColorPaint(SKColor.Parse("#9ece6a"));
+          {
+            return new SolidColorPaint(SKColor.Parse("#9ece6a"));
+          }
         case StressEffectCategory.Physical:
-          return new SolidColorPaint(SKColor.Parse("#2ac3de"));
+          {
+            return new SolidColorPaint(SKColor.Parse("#2ac3de"));
+          }
         default:
-          return new SolidColorPaint(SKColor.Parse("#1a1b26"));
+          {
+            return new SolidColorPaint(SKColor.Parse("#1a1b26"));
+          }
       }
     }
   }

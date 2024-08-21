@@ -5,8 +5,6 @@ using StressCommunicationAdminPanel.Models;
 using StressCommunicationAdminPanel.Services;
 using StressCommunicationAdminPanel.Helpers;
 using LiveChartsCore.SkiaSharpView;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.Windows.Controls;
@@ -23,8 +21,6 @@ namespace StressCommunicationAdminPanel.ViewModels
 
     private readonly StressMessageStatusBarHelper _statusBarHelper;
 
-    private ObservableCollection<StressMessage> _messages = new ObservableCollection<StressMessage>();
-
     private string _connectionStatus;
 
     private IconChar _connectionStatusIcon;
@@ -32,23 +28,16 @@ namespace StressCommunicationAdminPanel.ViewModels
     private Brush _connectionStatusIconColor;
 
     private Brush _connectionStatusColor;
-    public ObservableCollection<StressMessage> Messages
-    {
-      get
-      {
-        return _messages;
-      }
 
-      set
-      {
-        _messages = value;
-
-        OnPropertyChanged(nameof(Messages));
-      }
-    }
+    private Action<StressNotificationMessage> updateStressMessageDataTable;
+    
     public ICommand ToggleServerStateCommand { get; }
+    
     public StressMessageManager MessageManager => _messageManager;
+    
     public ObservableCollection<PieSeries<int>> StressEffectMessagesSeriesCollection => _pieChartHelper.StressEffectMessagesSeriesCollection;
+
+    public StresMessageInfoContentViewModel stresMessageInfoContentViewModel { get; }
 
     public int MessagesSent => _messageManager.MessagesSent;
 
@@ -111,13 +100,17 @@ namespace StressCommunicationAdminPanel.ViewModels
         OnPropertyChanged(nameof(ConnectionStatusColor));
       }
     }
-    public StressMessageViewModel(ProgressBar messageProgressBar)
+    public StressMessageViewModel(ProgressBar messageProgressBar, Action<StressNotificationMessage> onStressMessageSent)
     {
       _messageManager = new StressMessageManager(OnServerStateChanged, OnUpdateAdminPanelCharts, OnUpdateStatusBarContent);
 
       _pieChartHelper = new StressMessagePieChartHelper();
 
       _statusBarHelper = new StressMessageStatusBarHelper(messageProgressBar);
+
+      stresMessageInfoContentViewModel = new StresMessageInfoContentViewModel();
+
+      updateStressMessageDataTable = onStressMessageSent;
 
       _messageManager.PropertyChanged += (s, e) => OnMessagesSentPropertyChanged(s, e);
 
@@ -171,17 +164,10 @@ namespace StressCommunicationAdminPanel.ViewModels
 
       ConnectionStatusIconColor = iconColor;
     }
-
-    private void OnStressMessageReceived(StressNotificationMessage message)
-    {
-      Messages.Add(new StressMessage
-      {
-        timeSent = DateTime.Now,
-        message = JsonConvert.SerializeObject(message, new StringEnumConverter())
-      });
-    }
     private void OnUpdateAdminPanelCharts(StressNotificationMessage message)
     {
+      updateStressMessageDataTable?.Invoke(message);
+
       _pieChartHelper.UpdatePieChartData(message.currentStressCategory);
     }
     private void OnUpdateStatusBarContent(IconChar icon, bool progressBarAnimationState)

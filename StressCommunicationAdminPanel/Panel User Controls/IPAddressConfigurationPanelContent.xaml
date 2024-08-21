@@ -1,4 +1,4 @@
-﻿<uc:CustomViewUserControl x:Class="StressCommunicationAdminPanel.Panel_User_Controls.IPAddressConfigurationPanelContent"
+﻿<UserControl x:Class="StressCommunicationAdminPanel.Panel_User_Controls.IPAddressConfigurationPanelContent"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,7 +14,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <GroupBox Grid.Row="0" Header="App Configuration Panel" FontSize="30" FontWeight="Bold" FontFamily="Perpetua" Foreground="#c0caf5" Padding="10" Margin="30">
+        <GroupBox Grid.Row="0" Header="App Configuration Panel" FontSize="24" FontWeight="Bold" FontFamily="Cooper Black" Foreground="#cfc9c2" Padding="10" Margin="30">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -33,7 +33,7 @@
                 </Border>
 
                 <Border Grid.Row="0" Grid.Column="1" Height="100" Width="400" VerticalAlignment="Center">
-                    <TextBox Text="{Binding IpAddress}" Height="75" Style="{StaticResource actionTextBox}"/>
+                    <TextBox Text="{Binding IpAddress}" Foreground="White" Height="75" Style="{StaticResource actionTextBox}"/>
                 </Border>
 
                 <Border Grid.Row="1" Height="100" Width="400" VerticalAlignment="Center">
@@ -41,7 +41,7 @@
                 </Border>
 
                 <Border Grid.Row="1" Grid.Column="1" Height="100" Width="400" VerticalAlignment="Center">
-                    <TextBox Text="{Binding PortNumber}" Height="75" Style="{StaticResource actionTextBox}"/>
+                    <TextBox Text="{Binding PortNumber}" Foreground="White" Height="75" Style="{StaticResource actionTextBox}"/>
                 </Border>
 
                 <Border Grid.Row="2" Height="100" Width="400" VerticalAlignment="Center">
@@ -49,7 +49,7 @@
                 </Border>
 
                 <Border Grid.Row="2" Grid.Column="1" Height="100" Width="400" VerticalAlignment="Center">
-                    <TextBox Text="{Binding Timeout}" Height="75" Style="{StaticResource actionTextBox}"/>
+                    <TextBox Text="{Binding TimeInterval}" Foreground="White" Height="75" Style="{StaticResource actionTextBox}"/>
                 </Border>
 
                 <Border Grid.Row="3" Height="50" Width="200" VerticalAlignment="Center">
@@ -62,4 +62,4 @@
             </Grid>
         </GroupBox>
     </Grid>
-</uc:CustomViewUserControl>
+</UserControl>

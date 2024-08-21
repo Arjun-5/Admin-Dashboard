@@ -7,7 +7,6 @@
         xmlns:uc="clr-namespace:StressCommunicationAdminPanel.Panel_User_Controls"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
-        xmlns:panelUserControl ="clr-namespace:StressCommunicationAdminPanel.Panel_User_Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
     <Grid>
@@ -56,7 +55,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Style="{StaticResource menuButton}">
+                <Button Style="{StaticResource menuButton}" Command="{Binding ShowStresMessageInfoContentPanelCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="SignalMessenger" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="Stress Message Info" Style="{StaticResource menuButtonText}">
@@ -122,7 +121,7 @@
                     <TextBlock Text="Keep Cool Adaptive VR : Admin Panel" FontSize="40" FontWeight="Bold" FontFamily="Perpetua" Foreground="#c0caf5"/>
                 </StackPanel>
 
-                <Border Width="50" Height="50" BorderBrush="{Binding StressMessageViewModel.ConnectionStatusIconColor}" BorderThickness="2" CornerRadius="10" Margin="50 50 55 20" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Border Width="50" Height="50" BorderBrush="{Binding stressMessageViewModel.ConnectionStatusIconColor}" BorderThickness="2" CornerRadius="10" Margin="50 50 55 20" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="#565f89"/>
@@ -135,12 +134,12 @@
                     </Border.Style>
 
                     <Border.InputBindings>
-                        <MouseBinding MouseAction="LeftClick" Command="{Binding StressMessageViewModel.ToggleServerStateCommand}"/>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding stressMessageViewModel.ToggleServerStateCommand}"/>
                     </Border.InputBindings>
 
-                    <Button Command="{Binding StressMessageViewModel.ToggleServerStateCommand}" Style="{DynamicResource connectionButton}">
+                    <Button Command="{Binding stressMessageViewModel.ToggleServerStateCommand}" Style="{DynamicResource connectionButton}">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <fa:IconImage Icon="{Binding StressMessageViewModel.ConnectionStatusIcon}" Width="24" Height="24" Margin="5"/>
+                            <fa:IconImage Icon="{Binding stressMessageViewModel.ConnectionStatusIcon}" Width="24" Height="24" Margin="5"/>
                         </StackPanel>
                     </Button>
                 </Border>
@@ -167,7 +166,7 @@
 
 
                         <StatusBarItem Grid.Column="0" Margin="5 0 0 0">
-                            <TextBlock Text="{Binding StressMessageViewModel.ConnectionStatus}" Style="{StaticResource statusBarText}"/>
+                            <TextBlock Text="{Binding stressMessageViewModel.ConnectionStatus}" Style="{StaticResource statusBarText}"/>
                         </StatusBarItem>
 
                         <Separator Grid.Column="1" />
@@ -192,7 +191,7 @@
                         <Separator Grid.Column="5" />
 
                         <StatusBarItem Grid.Column="6" HorizontalAlignment="Right">
-                            <fa:IconImage Icon="{Binding StressMessageViewModel.StatusBarConnectionIcon}" Style="{StaticResource statusBarIcon}" Foreground="{Binding StressMessageViewModel.ConnectionStatusColor}" />
+                            <fa:IconImage Icon="{Binding stressMessageViewModel.StatusBarConnectionIcon}" Style="{StaticResource statusBarIcon}" Foreground="{Binding stressMessageViewModel.ConnectionStatusColor}" />
                         </StatusBarItem>
                     </StatusBar>
                 </Grid>
