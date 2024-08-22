@@ -5,22 +5,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d">
-    <Grid>
+    <Grid Grid.Row="1">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="0" Header="Stress Messages Info" Margin="10,0,10,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" FontFamily="Cooper Black" Foreground="#cfc9c2" Padding="10">
-            <DataGrid ItemsSource="{Binding StressMessages}" Background="Transparent" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="5" MinHeight="150" MaxHeight="150">
+        <GroupBox Grid.Row="0" Header="Stress Messages Info" Margin="40,0,40,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" FontFamily="Cooper Black" 
+                  Background="Transparent" Foreground="#cfc9c2" Padding="10">
+            <DataGrid ItemsSource="{Binding StressMessages}" Style="{StaticResource CustomDataGridStyling}" AutoGenerateColumns="False" Margin="5" MinHeight="150" MaxHeight="150">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Stress Type" Binding="{Binding currentStressCategory}" Width="*"/>
-                    <DataGridTextColumn Header="Stress Value" Binding="{Binding stressLevel}" Width="*" />
-                    <DataGridTextColumn Header="Timestamp" Binding="{Binding timeSent}" Width="*" />
+                    <DataGridTextColumn Header="Stress Type" Binding="{Binding currentStressCategory}" Width="*"
+                            HeaderStyle="{StaticResource TransparentHeaderStyle}"
+                            ElementStyle="{StaticResource CenteredCellStyle}" />
+                    <DataGridTextColumn Header="Stress Value" Binding="{Binding stressLevel}" Width="*"
+                            HeaderStyle="{StaticResource TransparentHeaderStyle}"
+                            ElementStyle="{StaticResource CenteredCellStyle}" />
+                    <DataGridTextColumn Header="Timestamp" Binding="{Binding timeSent}" Width="*"
+                            HeaderStyle="{StaticResource TransparentHeaderStyle}"
+                            ElementStyle="{StaticResource CenteredCellStyle}" />
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
 
-        <lvc:CartesianChart Grid.Row="1" Series="{Binding StressSeries}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}" LegendPosition="Right" Margin="10"/>
+        <lvc:CartesianChart Grid.Row="1" Margin="40,0,40,0" DrawMarginFrame="{Binding MarginFrame}" Series="{Binding StressSeries}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}" LegendPosition="Right" 
+        LegendBackgroundPaint="{Binding LedgendBackgroundPaint}" LegendTextPaint="{Binding LegendTextPaint}" LegendTextSize="16"
+        TooltipPosition="Left" TooltipTextPaint="{Binding TooltipTextPaint}" TooltipBackgroundPaint="{Binding TooltipBackgroundPaint}"/>
     </Grid>
 </UserControl>
