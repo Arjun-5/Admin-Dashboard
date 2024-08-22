@@ -14,7 +14,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <GroupBox Grid.Row="0" Header="App Configuration Panel" FontSize="24" FontWeight="Bold" FontFamily="Cooper Black" Foreground="#cfc9c2" Padding="10" Margin="30">
+        <GroupBox Grid.Row="0" Header="App Configuration Panel" Style="{StaticResource groupBoxStyling}" Padding="10" Margin="30">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>

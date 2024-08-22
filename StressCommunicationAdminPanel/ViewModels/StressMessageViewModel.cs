@@ -10,6 +10,8 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 using StressCommunicationAdminPanel.Commands;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace StressCommunicationAdminPanel.ViewModels
 {
@@ -166,7 +168,7 @@ namespace StressCommunicationAdminPanel.ViewModels
     }
     private void OnUpdateAdminPanelCharts(StressNotificationMessage message)
     {
-      updateStressMessageDataTable?.Invoke(message);
+      Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => updateStressMessageDataTable?.Invoke(message)));
 
       _pieChartHelper.UpdatePieChartData(message.currentStressCategory);
     }
