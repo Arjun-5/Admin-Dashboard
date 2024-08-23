@@ -11,6 +11,10 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <!-- Export Button
+        <Button Content="Export Data" Width="100" Margin="0,0,0,10" HorizontalAlignment="Right" Click="ExportData_Click"/>
+         -->
+        
         <GroupBox Grid.Row="0" Header="Stress Messages Info" Margin="40,0,40,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" FontFamily="Cooper Black" 
                   Background="Transparent" Foreground="#cfc9c2" Padding="10">
             <DataGrid ItemsSource="{Binding StressMessages}" Style="{StaticResource CustomDataGridStyling}" AutoGenerateColumns="False" Margin="5" MinHeight="150" MaxHeight="150">
