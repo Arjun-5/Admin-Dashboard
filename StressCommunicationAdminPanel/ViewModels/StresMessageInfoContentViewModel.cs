@@ -49,6 +49,31 @@ namespace StressCommunicationAdminPanel.ViewModels
 
     public Axis[] YAxes { get; set; }
 
+    public SolidColorPaint LegendTextPaint => new SolidColorPaint 
+    {
+      Color = SKColor.Parse("#ff9e64"),
+      SKTypeface = SKTypeface.FromFamilyName("Perpetua")
+    };
+
+    public SolidColorPaint LegendBackgroundPaint => new SolidColorPaint(SKColor.Parse("#ff9e64"));
+
+    public SolidColorPaint TooltipTextPaint => new SolidColorPaint
+    {
+      Color = SKColor.Parse("#f7768e"),
+      SKTypeface = SKTypeface.FromFamilyName("Perpetua",SKFontStyle.Bold)
+    };
+    public DrawMarginFrame MarginFrame => new DrawMarginFrame()
+    {
+      Fill = null,
+      Stroke = new SolidColorPaint
+      {
+        Color = SKColor.Parse("#9ece6a"),
+        StrokeThickness = 2
+      }
+    };
+
+    public SolidColorPaint TooltipBackgroundPaint => new SolidColorPaint(SKColor.Parse("#565f89"));
+
     public StresMessageInfoContentViewModel()
     {
       _mentalStressValues = new ObservableCollection<ObservablePoint>();
@@ -61,23 +86,41 @@ namespace StressCommunicationAdminPanel.ViewModels
       {
         Name = "Mental Stress",
         Values = _mentalStressValues,
-        Stroke = new SolidColorPaint(SKColors.Blue) { StrokeThickness = 2 },
+        Stroke = new SolidColorPaint(SKColor.Parse("#2ac3de")) { 
+          StrokeThickness = 1.25f
+        },
+        DataLabelsPaint = new SolidColorPaint(SKColor.Parse("#cfc9c2"))
+        {
+          SKTypeface = SKTypeface.FromFamilyName("Perpetua", SKFontStyle.Bold)
+        },
         Fill = null
       };
 
       _physicalStressSeries = new LineSeries<ObservablePoint>
       {
         Name = "Physical Stress",
-        Stroke = new SolidColorPaint(SKColors.Green) { StrokeThickness = 2 },
+        Stroke = new SolidColorPaint(SKColor.Parse("#9ece6a")) { 
+          StrokeThickness = 1.5f
+        },
         Fill = null,
+        DataLabelsPaint = new SolidColorPaint(SKColor.Parse("#cfc9c2"))
+        {
+          SKTypeface = SKTypeface.FromFamilyName("Perpetua", SKFontStyle.Bold)
+        },
         Values = _physicalStressValues
       };
 
       _emotionalStressSeries = new LineSeries<ObservablePoint>
       {
         Name = "Emotional Stress",
-        Stroke = new SolidColorPaint(SKColors.Red) { StrokeThickness = 2 },
+        Stroke = new SolidColorPaint(SKColor.Parse("#9ece6a")) {
+          StrokeThickness = 1
+        },
         Fill = null,
+        DataLabelsPaint = new SolidColorPaint(SKColor.Parse("#cfc9c2"))
+        {
+          SKTypeface = SKTypeface.FromFamilyName("Perpetua", SKFontStyle.Bold)
+        },
         Values = _emotionalStressValues
       };
 
@@ -87,9 +130,19 @@ namespace StressCommunicationAdminPanel.ViewModels
       {
         new Axis
         {
-            Name = "Timestamp",
-            Labeler = value => new DateTime((long)value).ToString("HH:mm:ss"),
-            NamePadding = new LiveChartsCore.Drawing.Padding(0, 15)
+          Name = "Timestamp",
+          Labeler = value => new DateTime((long)value).ToString("HH:mm:ss"),
+          NamePadding = new LiveChartsCore.Drawing.Padding(0, 15),
+          NamePaint = new SolidColorPaint(SKColor.Parse("#73daca"))
+          {
+            StrokeThickness = 1,
+            SKTypeface = SKTypeface.FromFamilyName("Perpetua", SKFontStyle.Bold)
+          },
+          LabelsPaint = new SolidColorPaint(SKColor.Parse("#73daca")) 
+          {
+            StrokeThickness = 1,
+            SKTypeface = SKTypeface.FromFamilyName("Perpetua", SKFontStyle.Bold)
+          },
         }
       };
 
@@ -97,9 +150,19 @@ namespace StressCommunicationAdminPanel.ViewModels
       {
         new Axis
         {
-            Name = "Stress Level",
-            NamePadding = new LiveChartsCore.Drawing.Padding(15, 0),
-            MinLimit = 0
+          Name = "Stress Level",
+          NamePadding = new LiveChartsCore.Drawing.Padding(15, 0),
+          NamePaint = new SolidColorPaint(SKColor.Parse("#e0af68"))
+          {
+            StrokeThickness = 2,
+            SKTypeface = SKTypeface.FromFamilyName("Perpetua", SKFontStyle.Bold)
+          },
+          MinLimit = 0,
+          LabelsPaint = new SolidColorPaint(SKColor.Parse("#e0af68"))
+          {
+            StrokeThickness = 1,
+            SKTypeface = SKTypeface.FromFamilyName("Perpetua", SKFontStyle.Bold)
+          },
         }
       };
     }
