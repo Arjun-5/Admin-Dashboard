@@ -11,6 +11,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <Button Content="Export Data" Width="100" Margin="0,0,0,10" HorizontalAlignment="Right" Click="ExportData_Click"/>
+
         <GroupBox Grid.Row="0" Header="Stress Messages Info" Margin="10,0,10,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" FontFamily="Cooper Black" Foreground="#cfc9c2" Padding="10">
             <DataGrid ItemsSource="{Binding StressMessages}" Background="Transparent" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="5" MinHeight="150" MaxHeight="150">
                 <DataGrid.Columns>

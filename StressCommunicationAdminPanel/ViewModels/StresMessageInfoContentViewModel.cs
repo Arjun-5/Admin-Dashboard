@@ -6,6 +6,12 @@ using System.Collections.ObjectModel;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using LiveChartsCore.Defaults;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows;
+using System.IO;
+using Microsoft.Win32;
 
 namespace StressCommunicationAdminPanel.ViewModels
 {
@@ -120,6 +126,51 @@ namespace StressCommunicationAdminPanel.ViewModels
           _emotionalStressValues.Add(graphPoint);
           break;
       }
+    }
+    private void ExportData_Click(object sender, RoutedEventArgs e)
+    {
+      // Get the data from the DataGrid's ItemsSource
+      var data = (IEnumerable<StressMessage>)StressMessages;
+
+      // Show a save file dialog
+      var saveFileDialog = new SaveFileDialog
+      {
+        Filter = "CSV files (*.csv)|*.csv|JSON files (*.json)|*.json",
+        Title = "Export Data"
+      };
+
+      if (saveFileDialog.ShowDialog() == true)
+      {
+        var filePath = saveFileDialog.FileName;
+
+        if (filePath.EndsWith(".csv"))
+        {
+          ExportToCsv(data, filePath);
+        }
+        else if (filePath.EndsWith(".json"))
+        {
+          ExportToJson(data, filePath);
+        }
+      }
+    }
+
+    private void ExportToCsv(IEnumerable<StressMessage> data, string filePath)
+    {
+      var csvData = new StringBuilder();
+      csvData.AppendLine("Stress Type,Stress Value,Timestamp");
+
+      foreach (var item in data)
+      {
+        csvData.AppendLine($"{item.currentStressCategory},{item.stressLevel},{item.timeSent}");
+      }
+
+      File.WriteAllText(filePath, csvData.ToString());
+    }
+
+    private void ExportToJson(IEnumerable<StressMessage> data, string filePath)
+    {
+      var jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
+      File.WriteAllText(filePath, jsonData);
     }
   }
 }
