@@ -29,6 +29,8 @@ namespace StressCommunicationAdminPanel.Services
 
     private Action<StressNotificationMessage> _onUpdateChartContent;
 
+    private Action<MessageTypeInfo> _onUpdateReceivedDataChartContent;
+
     private Action<IconChar, bool> _onHandleStatusBarState;
 
     private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -36,27 +38,55 @@ namespace StressCommunicationAdminPanel.Services
     private bool _serverRunning;
 
     private int _messagesSent;
+
+    private int _messagesReceived;
+
+    private string _deviceName;
     public int MessagesSent
     {
       get => _messagesSent;
 
       set
       {
-        if (_messagesSent != value)
-        {
-          _messagesSent = value;
+        _messagesSent = value;
 
-          OnPropertyChanged(nameof(MessagesSent));
-        }
+        OnPropertyChanged(nameof(MessagesSent));
       }
     }
-    public StressMessageManager(Action<ServerState, IconChar, Brush, Brush> onServerStateChanged, Action<StressNotificationMessage> onUpdateChartContent, Action<IconChar, bool> onHandleStatusBarState)
+    public int MessagesReceived
+    {
+      get => _messagesReceived;
+
+      set
+      {
+        _messagesReceived = value;
+
+        OnPropertyChanged(nameof(MessagesReceived));
+      }
+    }
+    public string DeviceName
+    {
+      get => _deviceName;
+
+      set
+      {
+        _deviceName = value;
+
+        OnPropertyChanged(nameof(DeviceName));
+      }
+    }
+    //Need to update setup later
+    public StressMessageManager(Action<ServerState, IconChar, Brush, Brush> onServerStateChanged, Action<StressNotificationMessage> onUpdateChartContent, Action<IconChar, bool> onHandleStatusBarState, Action<MessageTypeInfo> onUpdateReceivedChartContent)
     {
       _onServerStateChanged = onServerStateChanged;
 
       _onUpdateChartContent = onUpdateChartContent;
 
       _onHandleStatusBarState = onHandleStatusBarState;
+
+      _onUpdateReceivedDataChartContent = onUpdateReceivedChartContent;
+
+      DeviceName = "Not Connected";
     }
 
     public async void ManageServerState()
@@ -120,7 +150,7 @@ namespace StressCommunicationAdminPanel.Services
       _onHandleStatusBarState?.Invoke(IconChar.PlugCircleExclamation, false);
     }
 
-    private void SendBroadcastMessage()
+    private async void SendBroadcastMessage()
     {
       _client = new UdpClient();
       
@@ -130,8 +160,10 @@ namespace StressCommunicationAdminPanel.Services
       
       _client.Send(message, message.Length, endPoint);
       
-      Console.WriteLine("Broadcast Message Sent...");
-      
+      await ReceiveClientInformationMessage();
+
+      MessagesReceived++;
+
       _client.Close();
     }
 
@@ -245,6 +277,31 @@ namespace StressCommunicationAdminPanel.Services
         Console.WriteLine($"SocketException: {ex.Message}");
       }
     }
+    private async Task ReceiveClientInformationMessage()
+    {
+      try
+      {
+        byte[] buffer = new byte[1024];
+
+        var udpReceiveResult = await _client.ReceiveAsync();
+
+        string clientMessage = Encoding.ASCII.GetString(udpReceiveResult.Buffer);
+
+        var deviceInfo = JsonConvert.DeserializeObject<ReceivedMessageInfo>(clientMessage);
+
+        DeviceName = deviceInfo.messageContent;
+
+        _onUpdateReceivedDataChartContent?.Invoke(MessageTypeInfo.DeviceInfo);
+      }
+      catch (SocketException ex)
+      {
+        Console.WriteLine($"SocketException: {ex.Message}");
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine($"Exception Occured: {ex.Message}");
+      }
+    }
     private async void ReceiveMessagesFromClient(CancellationToken cancellationToken)
     {
       while(!cancellationToken.IsCancellationRequested)
@@ -257,11 +314,23 @@ namespace StressCommunicationAdminPanel.Services
 
           string clientMessage = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
 
-          var isConnectionCancelled = ConnectionStatus.DeserializeData(clientMessage);
+          var receivedMessage = JsonConvert.DeserializeObject<ReceivedMessageInfo>(clientMessage);
 
-          if (isConnectionCancelled)
+          if (receivedMessage != null)
           {
-            _cancellationTokenSource.Cancel();
+            MessagesReceived++;
+
+            if (receivedMessage.MessageTypeInfo == MessageTypeInfo.SelfReportStressInfo) 
+            {
+              _onUpdateReceivedDataChartContent?.Invoke(MessageTypeInfo.SelfReportStressInfo);
+            }
+
+            if (receivedMessage.MessageTypeInfo == MessageTypeInfo.Exit)
+            {
+              _cancellationTokenSource.Cancel();
+
+              return;
+            }
           }
         }
         catch (SocketException ex)

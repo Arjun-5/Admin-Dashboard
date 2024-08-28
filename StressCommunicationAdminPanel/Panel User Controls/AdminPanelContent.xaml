@@ -35,7 +35,7 @@
             </uc:StressMessageInfoCard>
 
             <uc:StressMessageInfoCard Grid.Column="2">
-                <uc:StressMessageInfoCard CardTitle="Message from Client" CardMessageTitle="Messages Received :" CardDescription="0" CardIcon="EnvelopeOpenText" CardIconColor="Black" 
+                <uc:StressMessageInfoCard CardTitle="Message from Client" CardMessageTitle="Messages Received :" CardDescription="{Binding MessagesReceived}" CardIcon="EnvelopeOpenText" CardIconColor="Black" 
                                           CardBackgroundGradientLeft="#2ac3de" CardBackgroundGradientRight="BlueViolet"
                                           CardEllipseBackgroundGradientLeft="#7dcfff" CardEllipseBackgroundGradientRight="#1a1b26" 
                                           CardStarFillColor="#ff9e64" CardStarStrokeColor="#24283b"/>
@@ -62,7 +62,7 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Margin="0 0 0 25">
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 25" HorizontalAlignment="Center">
                         <fa:IconImage Icon="EnvelopeCircleCheck" Style="{StaticResource titleIcon}"/>
                         <TextBlock Text="Messages Sent" Style="{StaticResource titleText}"/>
                     </StackPanel>
@@ -84,18 +84,16 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Margin="0 0 0 25">
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 25" HorizontalAlignment="Center">
                         <fa:IconImage Icon="EnvelopeOpenText" Style="{StaticResource titleIcon}"/>
                         <TextBlock Text="Messages Received" Style="{StaticResource titleText}"/>
                     </StackPanel>
 
-                    <lvc:PieChart Grid.Row="1" Series="{Binding MessagesSeries}">
-                        <!-- Define Pie Series properties here -->
-                    </lvc:PieChart>
+                    <lvc:PieChart Grid.Row="1" Series="{Binding StatusMessagesSeriesCollection}"/>
                 </Grid>
             </Border>
 
-            <Border Grid.Column="2" CornerRadius="20" Padding="0 25" Margin="55 0 55 40">
+            <Border Grid.Column="2" CornerRadius="20" Padding="0 25" Margin="55 0 55 40" Height="110">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                         <GradientStop Color="#414868" Offset="0"/>
@@ -106,12 +104,17 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Orientation="Horizontal" Margin="20 0 0 15">
-                        <fa:IconImage Icon="CircleInfo" Style="{StaticResource titleIcon}"/>
-                        <TextBlock Text="Client Information" Style="{StaticResource titleText}"/>
+                    <StackPanel Grid.Row="0" Orientation="Vertical" Margin="12 0 0 15">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="CircleInfo" Style="{StaticResource titleIcon}"/>
+                            <TextBlock Text="Client Information" Style="{StaticResource titleTextDeviceInfo}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="auto" Margin="5 20 5 0">
+                            <fa:IconImage Icon="MobileScreen" Height="20" Foreground="#9ece6a"/>
+                            <TextBlock Text="{Binding DeviceName}" Foreground="#cfc9c2" FontFamily="Perpetua" FontSize=" 15" FontWeight="ExtraBold" Margin="15 0 5 0"/>
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </Border>

@@ -45,7 +45,7 @@
                 </Border>
 
                 <Border Grid.Row="2" Height="100" Width="400" VerticalAlignment="Center">
-                    <TextBlock Text="Time Interval (Seconds) :" Style="{StaticResource actionButtonText}"/>
+                    <TextBlock Text="Time Interval (Milliseconds) :" Style="{StaticResource actionButtonText}"/>
                 </Border>
 
                 <Border Grid.Row="2" Grid.Column="1" Height="100" Width="400" VerticalAlignment="Center">

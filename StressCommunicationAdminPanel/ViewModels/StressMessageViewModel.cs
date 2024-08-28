@@ -38,10 +38,15 @@ namespace StressCommunicationAdminPanel.ViewModels
     public StressMessageManager MessageManager => _messageManager;
     
     public ObservableCollection<PieSeries<int>> StressEffectMessagesSeriesCollection => _pieChartHelper.StressEffectMessagesSeriesCollection;
+    public ObservableCollection<PieSeries<int>> StatusMessagesSeriesCollection => _pieChartHelper.StatusMessagesSeriesCollection;
 
     public StresMessageInfoContentViewModel stresMessageInfoContentViewModel { get; }
 
     public int MessagesSent => _messageManager.MessagesSent;
+
+    public int MessagesReceived => _messageManager.MessagesReceived;
+
+    public string DeviceName => _messageManager.DeviceName;
 
     public IconChar StatusBarConnectionIcon => _statusBarHelper.StatusBarConnectionIcon;
 
@@ -104,7 +109,7 @@ namespace StressCommunicationAdminPanel.ViewModels
     }
     public StressMessageViewModel(ProgressBar messageProgressBar, Action<StressNotificationMessage> onStressMessageSent)
     {
-      _messageManager = new StressMessageManager(OnServerStateChanged, OnUpdateAdminPanelCharts, OnUpdateStatusBarContent);
+      _messageManager = new StressMessageManager(OnServerStateChanged, OnUpdateAdminPanelCharts, OnUpdateStatusBarContent, OnUpdateReceivedDataChart);
 
       _pieChartHelper = new StressMessagePieChartHelper();
 
@@ -129,6 +134,16 @@ namespace StressCommunicationAdminPanel.ViewModels
       if (property.PropertyName == nameof(StressMessageManager.MessagesSent))
       {
         OnPropertyChanged(nameof(MessagesSent));
+      }
+
+      if (property.PropertyName == nameof(StressMessageManager.MessagesReceived))
+      {
+        OnPropertyChanged(nameof(MessagesReceived));
+      }
+
+      if (property.PropertyName == nameof(StressMessageManager.DeviceName))
+      {
+        OnPropertyChanged(nameof(DeviceName));
       }
     }
     private void OnStressEffectMessageSeriesCollectionUpdated(object obj, PropertyChangedEventArgs property)
@@ -171,6 +186,10 @@ namespace StressCommunicationAdminPanel.ViewModels
       Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => updateStressMessageDataTable?.Invoke(message)));
 
       _pieChartHelper.UpdatePieChartData(message.currentStressCategory);
+    }
+    private void OnUpdateReceivedDataChart(MessageTypeInfo message)
+    {
+      _pieChartHelper.UpdateReceivedPieChartData(message);
     }
     private void OnUpdateStatusBarContent(IconChar icon, bool progressBarAnimationState)
     {
