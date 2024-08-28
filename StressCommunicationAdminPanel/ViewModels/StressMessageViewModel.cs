@@ -146,7 +146,7 @@ namespace StressCommunicationAdminPanel.ViewModels
       }
     }
     private void ConfigureConnectionStatusDefaults()
-    {
+    { 
       ConnectionStatus = "Not Connected ! ! !";
 
       ConnectionStatusIcon = IconChar.UserSlash;

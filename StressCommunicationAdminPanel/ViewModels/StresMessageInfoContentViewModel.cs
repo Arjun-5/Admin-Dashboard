@@ -192,10 +192,8 @@ namespace StressCommunicationAdminPanel.ViewModels
     }
     private void ExportData_Click(object sender, RoutedEventArgs e)
     {
-      // Get the data from the DataGrid's ItemsSource
       var data = (IEnumerable<StressMessage>)StressMessages;
 
-      // Show a save file dialog
       var saveFileDialog = new SaveFileDialog
       {
         Filter = "CSV files (*.csv)|*.csv|JSON files (*.json)|*.json",
