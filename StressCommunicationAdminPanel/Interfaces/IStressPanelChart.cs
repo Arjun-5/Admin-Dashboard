@@ -1,5 +1,6 @@
 ﻿using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,8 +10,16 @@ using System.Threading.Tasks;
 
 namespace StressCommunicationAdminPanel.Interfaces
 {
-  public interface IStressPanelChart
+  public interface IStressPanelChart<TSeries, TCategory>
   {
-    public void InitializeChartSeries();
+    ObservableCollection<TSeries> ChartSeriesCollection { get; set; }
+
+    void UpdateChartData(TCategory category);
+
+    void InitializeChartSeries();
+
+    void ConfigureChartAttributes();
+
+    SolidColorPaint GetColorForCategory(TCategory category);
   }
 }
