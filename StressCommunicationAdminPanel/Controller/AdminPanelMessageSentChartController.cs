@@ -7,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using StressCommunicationAdminPanel.Interfaces;
+using LiveChartsCore.Measure;
 
 namespace StressCommunicationAdminPanel.Controller
 {
@@ -16,58 +17,52 @@ namespace StressCommunicationAdminPanel.Controller
 
     private bool _hasReplacedDefaultData;
 
-    public ObservableCollection<PieSeries<int>> ChartSeriesCollection
+    public ObservableCollection<PieSeries<int>> chartSeriesCollection
     {
       get => _stressEffectMessagesSeriesCollection;
+
       set
       {
         _stressEffectMessagesSeriesCollection = value;
-        OnPropertyChanged(nameof(ChartSeriesCollection));
+
+        OnPropertyChanged(nameof(chartSeriesCollection));
       }
     }
 
     public AdminPanelMessageSentChartController()
     {
-      ConfigureChartAttributes();
-    }
-
-    public void ConfigureChartAttributes()
-    {
-      ChartSeriesCollection = new ObservableCollection<PieSeries<int>>
-        {
-            new PieSeries<int>
-            {
-                Name = Enum.GetName(StressEffectCategory.None),
-                Values = new ObservableCollection<int> { 1 },
-                Stroke = new SolidColorPaint(SKColor.Parse("#414868")) { StrokeThickness = 3 },
-                Fill = new SolidColorPaint(SKColor.Parse("#1a1b26")),
-                DataLabelsPaint = new SolidColorPaint
-                {
-                    FontFamily = "Perpetua",
-                    SKFontStyle = new SKFontStyle(SKFontStyleWeight.ExtraBold, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic),
-                    Color = SKColors.White
-                }
-            }
-        };
+      ConfigureDefaultChartAttributes();
 
       _hasReplacedDefaultData = false;
+    }
+
+    public void ConfigureDefaultChartAttributes()
+    {
+      chartSeriesCollection = new ObservableCollection<PieSeries<int>>
+      {
+        ConfigureChartStyling(StressEffectCategory.None, 1, 22, 3, "#414868", PolarLabelsPosition.Middle)
+      };
     }
 
     public void UpdateChartData(StressEffectCategory effectCategory)
     {
       if (!_hasReplacedDefaultData)
       {
-        ChartSeriesCollection.Clear();
+        chartSeriesCollection.Clear();
+        
         InitializeChartSeries();
+        
         _hasReplacedDefaultData = true;
       }
 
       string effectTypeName = Enum.GetName(typeof(StressEffectCategory), effectCategory);
-      var series = ChartSeriesCollection.FirstOrDefault(s => s.Name == effectTypeName);
+
+      var series = chartSeriesCollection.FirstOrDefault(s => s.Name == effectTypeName);
 
       if (series != null)
       {
         var valuesCollection = series.Values as ObservableCollection<int>;
+
         if (valuesCollection != null)
         {
           valuesCollection[0]++;
@@ -77,7 +72,7 @@ namespace StressCommunicationAdminPanel.Controller
           series.Values = new ObservableCollection<int> { series.Values.First() + 1 };
         }
 
-        OnPropertyChanged(nameof(ChartSeriesCollection));
+        OnPropertyChanged(nameof(chartSeriesCollection));
       }
     }
 
@@ -85,21 +80,7 @@ namespace StressCommunicationAdminPanel.Controller
     {
       foreach (StressEffectCategory type in Enum.GetValues(typeof(StressEffectCategory)))
       {
-        ChartSeriesCollection.Add(new PieSeries<int>
-        {
-          Name = type.ToString(),
-          Values = new ObservableCollection<int> { 0 },
-          Fill = GetColorForCategory(type),
-          DataLabelsSize = 22,
-          Stroke = new SolidColorPaint(SKColor.Parse("#a9b1d6")) { StrokeThickness = 3 },
-          DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
-          DataLabelsPaint = new SolidColorPaint
-          {
-            FontFamily = "Perpetua",
-            SKFontStyle = new SKFontStyle(SKFontStyleWeight.ExtraBold, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic),
-            Color = SKColors.White
-          }
-        });
+        chartSeriesCollection.Add(ConfigureChartStyling(type, 0, 22, 3, "#a9b1d6", PolarLabelsPosition.Middle));
       }
     }
 
@@ -108,14 +89,40 @@ namespace StressCommunicationAdminPanel.Controller
       switch (type)
       {
         case StressEffectCategory.Mental:
-          return new SolidColorPaint(SKColor.Parse("#f7768e"));
+          {
+            return new SolidColorPaint(SKColor.Parse("#f7768e"));
+          }
         case StressEffectCategory.Emotional:
-          return new SolidColorPaint(SKColor.Parse("#9ece6a"));
+          {
+            return new SolidColorPaint(SKColor.Parse("#9ece6a"));
+          }
         case StressEffectCategory.Physical:
-          return new SolidColorPaint(SKColor.Parse("#2ac3de"));
+          {
+            return new SolidColorPaint(SKColor.Parse("#2ac3de"));
+          }
         default:
-          return new SolidColorPaint(SKColor.Parse("#1a1b26"));
+          {
+            return new SolidColorPaint(SKColor.Parse("#1a1b26"));
+          }
       }
+    }
+    public PieSeries<int> ConfigureChartStyling(StressEffectCategory category, int defaultValue, int dataLabelsSize, int strokeThickness, string strokeColor, PolarLabelsPosition labelsPosition)
+    {
+      return new PieSeries<int>
+      {
+        Name = category.ToString(),
+        Values = new ObservableCollection<int> { defaultValue },
+        Fill = GetColorForCategory(category),
+        DataLabelsSize = dataLabelsSize,
+        Stroke = new SolidColorPaint(SKColor.Parse(strokeColor)) { StrokeThickness = strokeThickness },
+        DataLabelsPosition = labelsPosition,
+        DataLabelsPaint = new SolidColorPaint
+        {
+          FontFamily = "Perpetua",
+          SKFontStyle = new SKFontStyle(SKFontStyleWeight.ExtraBold, SKFontStyleWidth.Normal, SKFontStyleSlant.Italic),
+          Color = SKColors.White
+        }
+      };
     }
   } 
 }

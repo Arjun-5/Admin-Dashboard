@@ -1,25 +1,21 @@
-﻿using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
+﻿using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView.Painting;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StressCommunicationAdminPanel.Interfaces
 {
   public interface IStressPanelChart<TSeries, TCategory>
   {
-    ObservableCollection<TSeries> ChartSeriesCollection { get; set; }
+    ObservableCollection<TSeries> chartSeriesCollection { get; set; }
 
-    void UpdateChartData(TCategory category);
+    void ConfigureDefaultChartAttributes();
 
     void InitializeChartSeries();
 
-    void ConfigureChartAttributes();
+    void UpdateChartData(TCategory category);
 
     SolidColorPaint GetColorForCategory(TCategory category);
+
+    TSeries ConfigureChartStyling(TCategory category, int defaultValue, int dataLabelsSize, int strokeThickness, string strokeColor, PolarLabelsPosition labelsPosition);
   }
 }

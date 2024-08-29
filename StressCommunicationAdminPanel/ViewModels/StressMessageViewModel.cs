@@ -37,8 +37,9 @@ namespace StressCommunicationAdminPanel.ViewModels
     
     public StressMessageManager MessageManager => _messageManager;
     
-    public ObservableCollection<PieSeries<int>> StressEffectMessagesSeriesCollection => _pieChartHelper.StressEffectMessagesSeriesCollection;
-    public ObservableCollection<PieSeries<int>> StatusMessagesSeriesCollection => _pieChartHelper.StatusMessagesSeriesCollection;
+    public ObservableCollection<PieSeries<int>> StressEffectMessagesSeriesCollection => _pieChartHelper.adminPanelMessageSentChartController.chartSeriesCollection;
+
+    public ObservableCollection<PieSeries<int>> StatusMessagesSeriesCollection => _pieChartHelper.adminPanelMessageReceivedChartController.chartSeriesCollection;
 
     public StresMessageInfoContentViewModel stresMessageInfoContentViewModel { get; }
 
@@ -121,8 +122,6 @@ namespace StressCommunicationAdminPanel.ViewModels
 
       _messageManager.PropertyChanged += (s, e) => OnMessagesSentPropertyChanged(s, e);
 
-      _pieChartHelper.PropertyChanged += (s, e) => OnStressEffectMessageSeriesCollectionUpdated(s, e);
-
       _statusBarHelper.PropertyChanged += (s, e) => OnStatusBarPropertyUpdated(s, e);
 
       ConfigureConnectionStatusDefaults();
@@ -144,13 +143,6 @@ namespace StressCommunicationAdminPanel.ViewModels
       if (property.PropertyName == nameof(StressMessageManager.DeviceName))
       {
         OnPropertyChanged(nameof(DeviceName));
-      }
-    }
-    private void OnStressEffectMessageSeriesCollectionUpdated(object obj, PropertyChangedEventArgs property)
-    {
-      if (property.PropertyName == nameof(StressMessagePieChartHelper.StressEffectMessagesSeriesCollection))
-      {
-        OnPropertyChanged(nameof(StressEffectMessagesSeriesCollection));
       }
     }
     private void OnStatusBarPropertyUpdated(object obj, PropertyChangedEventArgs property)
@@ -185,11 +177,11 @@ namespace StressCommunicationAdminPanel.ViewModels
     {
       Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => updateStressMessageDataTable?.Invoke(message)));
 
-      _pieChartHelper.UpdatePieChartData(message.currentStressCategory);
+      _pieChartHelper.adminPanelMessageSentChartController.UpdateChartData(message.currentStressCategory);
     }
     private void OnUpdateReceivedDataChart(MessageTypeInfo message)
     {
-      _pieChartHelper.UpdateReceivedPieChartData(message);
+      _pieChartHelper.adminPanelMessageReceivedChartController.UpdateChartData(message);
     }
     private void OnUpdateStatusBarContent(IconChar icon, bool progressBarAnimationState)
     {
