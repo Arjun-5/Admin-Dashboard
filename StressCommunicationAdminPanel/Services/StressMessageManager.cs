@@ -137,13 +137,21 @@ namespace StressCommunicationAdminPanel.Services
     {
       _serverRunning = false;
 
-      _clientSocket?.Shutdown(SocketShutdown.Both);
-      
-      _clientSocket?.Close();
-      
-      _client?.Close();
-      
-      _stressMessageTimer?.Stop();
+      try
+      {
+        _stressMessageTimer?.Stop();
+
+        _clientSocket?.Shutdown(SocketShutdown.Both);
+
+        _clientSocket?.Close();
+
+        _client?.Close();
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine("Exception occured when disposing socket object" + ex.Message);
+      }
+
       
       UpdateServerState(ServerState.Stopped, IconChar.UserTimes, Brushes.Red, Brushes.OrangeRed);
 
@@ -328,8 +336,6 @@ namespace StressCommunicationAdminPanel.Services
             if (receivedMessage.MessageTypeInfo == MessageTypeInfo.Exit)
             {
               _cancellationTokenSource.Cancel();
-
-              return;
             }
           }
         }

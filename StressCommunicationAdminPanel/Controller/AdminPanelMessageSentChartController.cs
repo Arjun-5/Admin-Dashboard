@@ -84,25 +84,25 @@ namespace StressCommunicationAdminPanel.Controller
       }
     }
 
-    public SolidColorPaint GetColorForCategory(StressEffectCategory type)
+    public RadialGradientPaint GetColorForCategory(StressEffectCategory type)
     {
       switch (type)
       {
         case StressEffectCategory.Mental:
           {
-            return new SolidColorPaint(SKColor.Parse("#f7768e"));
-          }
-        case StressEffectCategory.Emotional:
-          {
-            return new SolidColorPaint(SKColor.Parse("#9ece6a"));
+            return new RadialGradientPaint(SKColor.Parse("#f7768e"), SKColor.Parse("#e4bbff"));
           }
         case StressEffectCategory.Physical:
           {
-            return new SolidColorPaint(SKColor.Parse("#2ac3de"));
+            return new RadialGradientPaint(SKColor.Parse("#9ece6a"), SKColors.OrangeRed);
+          }
+        case StressEffectCategory.Emotional:
+          {
+            return new RadialGradientPaint(SKColor.Parse("#2ac3de"), SKColors.BlueViolet);
           }
         default:
           {
-            return new SolidColorPaint(SKColor.Parse("#1a1b26"));
+            return new RadialGradientPaint(SKColor.Parse("#1a1b26"), SKColor.Parse("#050507"));
           }
       }
     }

@@ -12,10 +12,13 @@ using System.Text;
 using System.Windows;
 using System.IO;
 using Microsoft.Win32;
+using StressCommunicationAdminPanel.Controller;
+using StressCommunicationAdminPanel.Interfaces;
+using LiveChartsCore.Measure;
 
 namespace StressCommunicationAdminPanel.ViewModels
 {
-  public class StresMessageInfoContentViewModel : AppViewModel
+  public class StresMessageInfoContentViewModel : AppViewModel, IStressPanelChart<StressMessage,StressMessage>
   {
     private ObservableCollection<StressMessage> _messages = new ObservableCollection<StressMessage>();
 
@@ -73,6 +76,8 @@ namespace StressCommunicationAdminPanel.ViewModels
     };
 
     public SolidColorPaint TooltipBackgroundPaint => new SolidColorPaint(SKColor.Parse("#565f89"));
+
+    public ObservableCollection<StressMessage> chartSeriesCollection { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
     public StresMessageInfoContentViewModel()
     {
@@ -232,6 +237,31 @@ namespace StressCommunicationAdminPanel.ViewModels
     {
       var jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
       File.WriteAllText(filePath, jsonData);
+    }
+
+    public void ConfigureDefaultChartAttributes()
+    {
+      throw new NotImplementedException();
+    }
+
+    public void InitializeChartSeries()
+    {
+      throw new NotImplementedException();
+    }
+
+    public void UpdateChartData(StressMessage category)
+    {
+      throw new NotImplementedException();
+    }
+
+    public RadialGradientPaint GetColorForCategory(StressMessage category)
+    {
+      throw new NotImplementedException();
+    }
+
+    public StressMessage ConfigureChartStyling(StressMessage category, int defaultValue, int dataLabelsSize, int strokeThickness, string strokeColor, PolarLabelsPosition labelsPosition)
+    {
+      throw new NotImplementedException();
     }
   }
 }

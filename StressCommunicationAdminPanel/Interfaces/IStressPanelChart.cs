@@ -14,7 +14,7 @@ namespace StressCommunicationAdminPanel.Interfaces
 
     void UpdateChartData(TCategory category);
 
-    SolidColorPaint GetColorForCategory(TCategory category);
+    RadialGradientPaint GetColorForCategory(TCategory category);
 
     TSeries ConfigureChartStyling(TCategory category, int defaultValue, int dataLabelsSize, int strokeThickness, string strokeColor, PolarLabelsPosition labelsPosition);
   }

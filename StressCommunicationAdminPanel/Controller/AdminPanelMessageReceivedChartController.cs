@@ -41,33 +41,33 @@ namespace StressCommunicationAdminPanel.Controller
       };
     }
 
-    public SolidColorPaint GetColorForCategory(MessageTypeInfo category)
+    public RadialGradientPaint GetColorForCategory(MessageTypeInfo category)
     {
       switch (category)
       {
         case MessageTypeInfo.DeviceInfo:
           {
-            return new SolidColorPaint(SKColor.Parse("#ff9e64"));
+            return new RadialGradientPaint(SKColor.Parse("#827bff"),SKColor.Parse("#e4bbff"));
           }
         case MessageTypeInfo.TaskInfo:
           {
-            return new SolidColorPaint(SKColor.Parse("#9ece6a"));
+            return new RadialGradientPaint(SKColor.Parse("#ff9e64"),SKColors.OrangeRed);
           }
         case MessageTypeInfo.SelfReportStressInfo:
           {
-            return new SolidColorPaint(SKColor.Parse("#2ac3de"));
+            return new RadialGradientPaint(SKColor.Parse("#2ac3de"),SKColors.BlueViolet);
           }
         case MessageTypeInfo.PhysicsInfo:
           {
-            return new SolidColorPaint(SKColor.Parse("#bb9af7"));
+            return new RadialGradientPaint(SKColor.Parse("#bb9af7"),SKColor.Parse("#382e4a"));
           }
         case MessageTypeInfo.Exit:
           {
-            return new SolidColorPaint(SKColors.OrangeRed);
+            return new RadialGradientPaint(SKColors.OrangeRed,SKColors.Red);
           }
         default:
           {
-            return new SolidColorPaint(SKColor.Parse("#1a1b26"));
+            return new RadialGradientPaint(SKColor.Parse("#1a1b26"),SKColor.Parse("#050507"));
           }
       }
     }
