@@ -15,25 +15,54 @@ namespace StressCommunicationAdminPanel.ViewModels
 
     private int _timeInterval;
 
+    private bool _debugStatus;
+
     public string IpAddress
     {
       get => _ipAddress;
 
-      set { _ipAddress = value; OnPropertyChanged(nameof(IpAddress)); }
+      set 
+      { 
+        _ipAddress = value; 
+        
+        OnPropertyChanged(nameof(IpAddress)); 
+      }
     }
 
     public int PortNumber
     {
       get => _portNumber;
 
-      set { _portNumber = value; OnPropertyChanged(nameof(PortNumber)); }
+      set 
+      { 
+        _portNumber = value; 
+        
+        OnPropertyChanged(nameof(PortNumber)); 
+      }
     }
 
     public int TimeInterval
     {
       get => _timeInterval;
 
-      set { _timeInterval = value; OnPropertyChanged(nameof(TimeInterval)); }
+      set 
+      { 
+        _timeInterval = value; 
+
+        OnPropertyChanged(nameof(TimeInterval)); 
+      }
+    }
+
+    public bool DebugStatus
+    {
+      get => _debugStatus;
+
+      set
+      {
+        _debugStatus = value;
+
+        OnPropertyChanged(nameof(DebugStatus));
+      }
     }
 
     public ICommand SaveCommand { get; }
@@ -51,7 +80,8 @@ namespace StressCommunicationAdminPanel.ViewModels
       {
         ipAddress = this.IpAddress,
         stressMessageSendingPort = this.PortNumber,
-        messageTimeInterval = this.TimeInterval
+        messageTimeInterval = this.TimeInterval,
+        shouldUseDebugSetup = this.DebugStatus
       };
 
       string json = JsonConvert.SerializeObject(config,Formatting.Indented);
@@ -78,6 +108,8 @@ namespace StressCommunicationAdminPanel.ViewModels
         PortNumber = config.stressMessageSendingPort;
 
         TimeInterval = config.messageTimeInterval;
+
+        DebugStatus = config.shouldUseDebugSetup;
       }
     }
   }

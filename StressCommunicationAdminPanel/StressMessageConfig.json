@@ -1,5 +1,6 @@
 {
   "ipaddress": "10.0.0.147",
   "messageTimeInterval" : 10000,
-  "stressMessageSendingPort" : 25000
+  "stressMessageSendingPort" : 25000,
+  "shouldUseDebugSetup" : false
 }

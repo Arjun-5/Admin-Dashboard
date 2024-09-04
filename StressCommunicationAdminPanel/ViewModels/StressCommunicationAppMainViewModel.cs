@@ -1,6 +1,5 @@
 ﻿using StressCommunicationAdminPanel.Commands;
 using StressCommunicationAdminPanel.Panel_User_Controls;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 

@@ -20,8 +20,10 @@ namespace StressCommunicationAdminPanel.Services
   public class StressMessageManager : PropertyChangeHandler
   {
     private UdpClient _client;
-    
-    private Socket _clientSocket;
+
+    private Socket _stressMessageSocket;
+
+    private Socket _vrAppClientSocket;
     
     private Timer _stressMessageTimer;
     
@@ -34,6 +36,8 @@ namespace StressCommunicationAdminPanel.Services
     private Action<IconChar, bool> _onHandleStatusBarState;
 
     private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+
+    private CancellationTokenSource _stressMessageExternalAppTokenSource = new CancellationTokenSource();
 
     private bool _serverRunning;
 
@@ -99,7 +103,7 @@ namespace StressCommunicationAdminPanel.Services
 
         byte[] messageBytes = Encoding.ASCII.GetBytes(serializedMessage);
 
-        await _clientSocket.SendAsync(messageBytes);
+        await _vrAppClientSocket.SendAsync(messageBytes);
 
         StopServer();
 
@@ -141,9 +145,9 @@ namespace StressCommunicationAdminPanel.Services
       {
         _stressMessageTimer?.Stop();
 
-        _clientSocket?.Shutdown(SocketShutdown.Both);
+        _vrAppClientSocket?.Shutdown(SocketShutdown.Both);
 
-        _clientSocket?.Close();
+        _vrAppClientSocket?.Close();
 
         _client?.Close();
       }
@@ -152,12 +156,83 @@ namespace StressCommunicationAdminPanel.Services
         Console.WriteLine("Exception occured when disposing socket object" + ex.Message);
       }
 
-      
       UpdateServerState(ServerState.Stopped, IconChar.UserTimes, Brushes.Red, Brushes.OrangeRed);
 
       _onHandleStatusBarState?.Invoke(IconChar.PlugCircleExclamation, false);
     }
+    private async void ConfigureStressMessageSocketAttributes(StressMessageConfig config)
+    {
+      var stressMessageSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
+      stressMessageSocket.Bind(new IPEndPoint(IPAddress.Loopback, config.stressMessageSendingPort));
+
+      stressMessageSocket.Listen();
+
+      _stressMessageSocket = await Task.Run(() => stressMessageSocket.Accept(), _stressMessageExternalAppTokenSource.Token);
+
+      if (_stressMessageSocket == null)
+      {
+        Console.WriteLine("Failed to accept a client connection.");
+
+        return;
+      }
+
+      await Task.Run(() =>
+      {
+        ReceiveStressMessagesFromExternalApp(_stressMessageExternalAppTokenSource.Token);
+      }, _stressMessageExternalAppTokenSource.Token);
+    }
+    private async void ReceiveStressMessagesFromExternalApp(CancellationToken cancellationToken)
+    {
+      while (!cancellationToken.IsCancellationRequested)
+      {
+        try
+        {
+          byte[] buffer = new byte[1024];
+          
+          int bytesReceived = await _stressMessageSocket.ReceiveAsync(new ArraySegment<byte>(buffer), SocketFlags.None);
+
+          string message = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
+
+          var stressNotificationMessage = JsonConvert.DeserializeObject<StressNotificationMessage>(message);
+
+          Console.WriteLine("The stress notification message : " + message);
+
+          if (stressNotificationMessage != null)
+          {
+            MessagesReceived++;
+            
+            _onUpdateChartContent?.Invoke(stressNotificationMessage);
+
+            if (_vrAppClientSocket == null)
+            {
+              return;
+            }
+
+            try
+            {
+              byte[] messageBytes = Encoding.ASCII.GetBytes(message);
+
+              _vrAppClientSocket.Send(messageBytes);
+              
+              MessagesSent++;
+            }
+            catch (SocketException ex)
+            {
+              Console.WriteLine($"SocketException: {ex.Message}");
+
+              _stressMessageExternalAppTokenSource.Cancel();
+            }
+          }
+        }
+        catch (Exception ex)
+        {
+          Console.WriteLine($"Exception {ex.Source} Occurred with the following message : {ex.Message}");
+
+          _stressMessageExternalAppTokenSource.Cancel();
+        }
+      }
+    }
     private async void SendBroadcastMessage()
     {
       _client = new UdpClient();
@@ -177,19 +252,8 @@ namespace StressCommunicationAdminPanel.Services
 
     private async Task SetupConnectionParameters(StressMessageConfig config)
     {
-      if (config == null)
-      {
-        Console.WriteLine("Please check the data in your config file");
-
-        return;
-      }
-
       try
       {
-        _stressMessageTimer = new Timer(config.messageTimeInterval);
-
-        _stressMessageTimer.Elapsed += (sender, e) => OnStressMessageTimerElapsed(sender, e, config);
-
         var serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         
         serverSocket.Bind(new IPEndPoint(IPAddress.Parse(config.ipAddress), config.stressMessageSendingPort));
@@ -198,7 +262,12 @@ namespace StressCommunicationAdminPanel.Services
 
         Console.WriteLine("Server is listening for connections");
 
-        _clientSocket = await Task.Run(() =>
+        await Task.Run(() =>
+        {
+          ConfigureStressMessageSocketAttributes(config);
+        }, _stressMessageExternalAppTokenSource.Token);
+
+        _vrAppClientSocket = await Task.Run(() =>
         {
           try
           {
@@ -218,22 +287,27 @@ namespace StressCommunicationAdminPanel.Services
           }
         },_cancellationTokenSource.Token);
 
-        if (_clientSocket == null)
+        if (_vrAppClientSocket == null)
         {
           Console.WriteLine("Failed to accept a client connection.");
           
           return;
         }
 
+        if (config.shouldUseDebugSetup)
+        {
+          _stressMessageTimer = new Timer(config.messageTimeInterval);
+
+          _stressMessageTimer.Elapsed += (sender, e) => OnStressMessageTimerElapsed(sender, e, config);
+
+          SendStressMessage(config);
+
+          _stressMessageTimer.Start();
+        }
+
         UpdateServerState(ServerState.Connected, IconChar.UserCheck, Brushes.Lime, Brushes.Lime);
 
         _onHandleStatusBarState?.Invoke(IconChar.PlugCircleCheck, true);
-        
-        Console.WriteLine("Client connected!");
-        
-        SendStressMessage(config);
-
-        _stressMessageTimer.Start();
 
         await Task.Run(() =>
         {
@@ -255,7 +329,7 @@ namespace StressCommunicationAdminPanel.Services
 
     private void SendStressMessage(StressMessageConfig config)
     {
-      if (_clientSocket == null)
+      if (_vrAppClientSocket == null)
       {
         return;
       }
@@ -276,7 +350,7 @@ namespace StressCommunicationAdminPanel.Services
 
         MessagesSent++;
 
-        _clientSocket.Send(messageBytes);
+        _vrAppClientSocket.Send(messageBytes);
 
         _onUpdateChartContent?.Invoke(stressNotificationMessage);
       }
@@ -318,7 +392,7 @@ namespace StressCommunicationAdminPanel.Services
         {
           byte[] buffer = new byte[1024];
 
-          int bytesReceived = await _clientSocket.ReceiveAsync(new ArraySegment<byte>(buffer),SocketFlags.None);
+          int bytesReceived = await _vrAppClientSocket.ReceiveAsync(new ArraySegment<byte>(buffer),SocketFlags.None);
 
           string clientMessage = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
 

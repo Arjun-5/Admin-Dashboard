@@ -7,5 +7,7 @@
     public int messageTimeInterval { get; set; }
 
     public int stressMessageSendingPort { get; set; }
+
+    public bool shouldUseDebugSetup {  get; set; } 
   }
 }
