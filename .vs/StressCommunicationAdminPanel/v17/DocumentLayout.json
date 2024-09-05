@@ -1,0 +1,196 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|c:\\users\\rahul\\desktop\\socket communication ui setup\\stresscommunicationadminpanel\\stresscommunicationadminpanel\\services\\stressmessagemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|solutionrelative:stresscommunicationadminpanel\\services\\stressmessagemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|c:\\users\\rahul\\desktop\\socket communication ui setup\\stresscommunicationadminpanel\\stresscommunicationadminpanel\\refactoring\\stressmessagemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|solutionrelative:stresscommunicationadminpanel\\refactoring\\stressmessagemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|c:\\users\\rahul\\desktop\\socket communication ui setup\\stresscommunicationadminpanel\\stresscommunicationadminpanel\\refactoring\\udpcommunicationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|solutionrelative:stresscommunicationadminpanel\\refactoring\\udpcommunicationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|c:\\users\\rahul\\desktop\\socket communication ui setup\\stresscommunicationadminpanel\\stresscommunicationadminpanel\\refactoring\\vrappmessagehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|solutionrelative:stresscommunicationadminpanel\\refactoring\\vrappmessagehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|c:\\users\\rahul\\desktop\\socket communication ui setup\\stresscommunicationadminpanel\\stresscommunicationadminpanel\\refactoring\\externalappstressmessagehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|solutionrelative:stresscommunicationadminpanel\\refactoring\\externalappstressmessagehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|c:\\users\\rahul\\desktop\\socket communication ui setup\\stresscommunicationadminpanel\\stresscommunicationadminpanel\\viewmodels\\stressmessageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|solutionrelative:stresscommunicationadminpanel\\viewmodels\\stressmessageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|c:\\users\\rahul\\desktop\\socket communication ui setup\\stresscommunicationadminpanel\\stresscommunicationadminpanel\\models\\stressnotificationmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|solutionrelative:stresscommunicationadminpanel\\models\\stressnotificationmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|c:\\users\\rahul\\desktop\\socket communication ui setup\\stresscommunicationadminpanel\\stresscommunicationadminpanel\\refactoring\\istressmessagemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|solutionrelative:stresscommunicationadminpanel\\refactoring\\istressmessagemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|c:\\users\\rahul\\desktop\\socket communication ui setup\\stresscommunicationadminpanel\\stresscommunicationadminpanel\\services\\stressmessagetimer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|solutionrelative:stresscommunicationadminpanel\\services\\stressmessagetimer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|c:\\users\\rahul\\desktop\\socket communication ui setup\\stresscommunicationadminpanel\\stresscommunicationadminpanel\\refactoring\\tcpcommunicationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B3517E0-2A75-4CA0-B5A0-7D27559AEB37}|StressCommunicationAdminPanel\\StressCommunicationAdminPanel.csproj|solutionrelative:stresscommunicationadminpanel\\refactoring\\tcpcommunicationhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 216,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IStressMessageManager.cs",
+              "DocumentMoniker": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Refactoring\\IStressMessageManager.cs",
+              "RelativeDocumentMoniker": "StressCommunicationAdminPanel\\Refactoring\\IStressMessageManager.cs",
+              "ToolTip": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Refactoring\\IStressMessageManager.cs",
+              "RelativeToolTip": "StressCommunicationAdminPanel\\Refactoring\\IStressMessageManager.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAABPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-05T13:17:55.246Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "StressNotificationMessage.cs",
+              "DocumentMoniker": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Models\\StressNotificationMessage.cs",
+              "RelativeDocumentMoniker": "StressCommunicationAdminPanel\\Models\\StressNotificationMessage.cs",
+              "ToolTip": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Models\\StressNotificationMessage.cs",
+              "RelativeToolTip": "StressCommunicationAdminPanel\\Models\\StressNotificationMessage.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-05T13:03:23.508Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "StressMessageViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\ViewModels\\StressMessageViewModel.cs",
+              "RelativeDocumentMoniker": "StressCommunicationAdminPanel\\ViewModels\\StressMessageViewModel.cs",
+              "ToolTip": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\ViewModels\\StressMessageViewModel.cs",
+              "RelativeToolTip": "StressCommunicationAdminPanel\\ViewModels\\StressMessageViewModel.cs",
+              "ViewState": "AQIAAG4AAAAAAAAAAAAgwIQAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-05T10:20:45.38Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "StressMessageTimer.cs",
+              "DocumentMoniker": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Services\\StressMessageTimer.cs",
+              "RelativeDocumentMoniker": "StressCommunicationAdminPanel\\Services\\StressMessageTimer.cs",
+              "ToolTip": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Services\\StressMessageTimer.cs",
+              "RelativeToolTip": "StressCommunicationAdminPanel\\Services\\StressMessageTimer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-05T10:18:52.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "StressMessageManager.cs",
+              "DocumentMoniker": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Services\\StressMessageManager.cs",
+              "RelativeDocumentMoniker": "StressCommunicationAdminPanel\\Services\\StressMessageManager.cs",
+              "ToolTip": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Services\\StressMessageManager.cs",
+              "RelativeToolTip": "StressCommunicationAdminPanel\\Services\\StressMessageManager.cs",
+              "ViewState": "AQIAANkAAAAAAAAAAAAAAOkAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-05T09:51:07.25Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TcpCommunicationHandler.cs",
+              "DocumentMoniker": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Refactoring\\TcpCommunicationHandler.cs",
+              "RelativeDocumentMoniker": "StressCommunicationAdminPanel\\Refactoring\\TcpCommunicationHandler.cs",
+              "ToolTip": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Refactoring\\TcpCommunicationHandler.cs",
+              "RelativeToolTip": "StressCommunicationAdminPanel\\Refactoring\\TcpCommunicationHandler.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAqwAkAAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-05T09:49:45.546Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 184,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "VRAppMessageHandler.cs",
+              "DocumentMoniker": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Refactoring\\VRAppMessageHandler.cs",
+              "RelativeDocumentMoniker": "StressCommunicationAdminPanel\\Refactoring\\VRAppMessageHandler.cs",
+              "ToolTip": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Refactoring\\VRAppMessageHandler.cs",
+              "RelativeToolTip": "StressCommunicationAdminPanel\\Refactoring\\VRAppMessageHandler.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAAAwwAkAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-05T11:04:07.783Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ExternalAppStressMessageHandler.cs",
+              "DocumentMoniker": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Refactoring\\ExternalAppStressMessageHandler.cs",
+              "RelativeDocumentMoniker": "StressCommunicationAdminPanel\\Refactoring\\ExternalAppStressMessageHandler.cs",
+              "ToolTip": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Refactoring\\ExternalAppStressMessageHandler.cs",
+              "RelativeToolTip": "StressCommunicationAdminPanel\\Refactoring\\ExternalAppStressMessageHandler.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABUAAAA6AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-05T10:31:00.175Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UdpCommunicationHandler.cs",
+              "DocumentMoniker": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Refactoring\\UdpCommunicationHandler.cs",
+              "RelativeDocumentMoniker": "StressCommunicationAdminPanel\\Refactoring\\UdpCommunicationHandler.cs",
+              "ToolTip": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Refactoring\\UdpCommunicationHandler.cs",
+              "RelativeToolTip": "StressCommunicationAdminPanel\\Refactoring\\UdpCommunicationHandler.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAgwBwAAAAGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-05T09:49:46.522Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StressMessageManager.cs",
+              "DocumentMoniker": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Refactoring\\StressMessageManager.cs",
+              "RelativeDocumentMoniker": "StressCommunicationAdminPanel\\Refactoring\\StressMessageManager.cs",
+              "ToolTip": "C:\\Users\\rahul\\Desktop\\Socket Communication UI Setup\\StressCommunicationAdminPanel\\StressCommunicationAdminPanel\\Refactoring\\StressMessageManager.cs",
+              "RelativeToolTip": "StressCommunicationAdminPanel\\Refactoring\\StressMessageManager.cs",
+              "ViewState": "AQIAAE8AAAAAAAAAAAAcwG8AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-05T09:49:44.099Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
@@ -14,8 +12,6 @@ namespace StressCommunicationAdminPanel.Refactoring
     private Socket _serverSocket;
 
     private Socket _clientSocket;
-    
-    private CancellationToken _cancellationToken;
 
     public async Task<Socket> SetupTcpServer(string ipAddress, int port, CancellationToken cancellationToken)
     {
@@ -24,17 +20,17 @@ namespace StressCommunicationAdminPanel.Refactoring
       _serverSocket.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
       
       _serverSocket.Listen(2);
-      
+
       Console.WriteLine("Server is listening for connections");
 
-      _cancellationToken = cancellationToken;
+      _clientSocket = await Task.Run(() => _serverSocket.Accept(), cancellationToken);
       
-      return await Task.Run(() => _serverSocket.Accept(), _cancellationToken);
+      return _clientSocket;
     }
 
-    public async Task ReceiveMessagesFromClient(Action<string> onMessageReceived)
+    public async Task ReceiveMessagesFromClient(Action<string> onMessageReceived, CancellationToken cancellationToken)
     {
-      while (!_cancellationToken.IsCancellationRequested)
+      while (!cancellationToken.IsCancellationRequested)
       {
         byte[] buffer = new byte[1024];
         
@@ -48,9 +44,9 @@ namespace StressCommunicationAdminPanel.Refactoring
 
     public void Close()
     {
-      _serverSocket?.Close();
-      
       _clientSocket?.Close();
+      
+      _serverSocket?.Close();
     }
   }
 }

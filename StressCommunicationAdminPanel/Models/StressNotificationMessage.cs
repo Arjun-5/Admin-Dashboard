@@ -20,5 +20,9 @@ namespace StressCommunicationAdminPanel.Models
 
       this.cancellationStatus = isCancelled;
     }
+    public StressNotificationMessage() 
+    {
+
+    }
   }
 }

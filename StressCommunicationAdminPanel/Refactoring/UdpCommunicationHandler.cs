@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using StressCommunicationAdminPanel.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
@@ -14,6 +12,8 @@ namespace StressCommunicationAdminPanel.Refactoring
   {
     private UdpClient _udpClient;
 
+    private Action<MessageTypeInfo> onStressNotificationMessageSent;
+
     public async Task SendBroadcastMessage()
     {
       _udpClient = new UdpClient();
@@ -23,9 +23,13 @@ namespace StressCommunicationAdminPanel.Refactoring
       byte[] message = Encoding.ASCII.GetBytes("Server IP Address Broadcast Message");
       
       await _udpClient.SendAsync(message, message.Length, endPoint);
+
+      await ReceiveClientInformationMessage();
+
+      Close();
     }
 
-    public async Task<ReceivedMessageInfo> ReceiveClientInformationMessage()
+    public async Task ReceiveClientInformationMessage()
     {
       try
       {
@@ -33,19 +37,21 @@ namespace StressCommunicationAdminPanel.Refactoring
         
         string clientMessage = Encoding.ASCII.GetString(udpReceiveResult.Buffer);
         
-        return JsonConvert.DeserializeObject<ReceivedMessageInfo>(clientMessage);
+         JsonConvert.DeserializeObject<ReceivedMessageInfo>(clientMessage);
+
+        onStressNotificationMessageSent?.Invoke(MessageTypeInfo.DeviceInfo);
       }
       catch (Exception ex)
       {
-        Console.WriteLine($"Exception Occurred: {ex.Message}");
-        
-        return null;
+        Console.WriteLine($"Exception {ex.Source} occured with the following message {ex.Message}");
+
+        return;
       }
     }
 
     public void Close()
     {
-      _udpClient.Close();
+      _udpClient?.Close();
     }
   }
 }

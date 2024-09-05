@@ -4,90 +4,109 @@ using System;
 using System.Windows.Media;
 using System.Threading;
 using System.Threading.Tasks;
+using StressCommunicationAdminPanel.Services;
+using System.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Text;
 
 namespace StressCommunicationAdminPanel.Refactoring
 {
-  public class StressMessageManager : IStressMessageManager
+  public class StressMessageManager : PropertyChangeHandler, IStressMessageManager
   {
-    private UdpCommunicationHandler _udpHandler;
-    
-    private TcpCommunicationHandler _tcpHandler;
+    private VRAppMessageHandler _vrAppMessageCommunicationHandler;
 
-    private Timer _stressMessageTimer;
-    
+    private ExternalAppStressMessageHandler _externalAppMessageCommunicationHandler;
+
+    private Action<ServerState, IconChar, Brush, Brush> onServerStateChanged;
+
+    private Action<StressNotificationMessage> onUpdateStressMessageChart;
+
+    private Action<IconChar, bool> onHandleStatusBarState;
+
+    private Action<MessageTypeInfo> onUpdateVRDataChartContent;
+
+    private CancellationTokenSource _vrAppCancellationTokenSource = new CancellationTokenSource();
+
+    private CancellationTokenSource _stressMessageExternalAppTokenSource = new CancellationTokenSource();
+
+    private string _deviceName;
+
     private bool _serverRunning;
-    
-    private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
-    public int MessagesSent { get; set; }
-    
-    public int MessagesReceived { get; set; }
-    
-    public string DeviceName { get; set; }
-
-    private Action<ServerState, IconChar, Brush, Brush> _onServerStateChanged;
-    
-    private Action<StressNotificationMessage> _onUpdateChartContent;
-
-    public StressMessageManager(Action<ServerState, IconChar, Brush, Brush> onServerStateChanged, Action<StressNotificationMessage> onUpdateChartContent)
+    public string DeviceName
     {
-      _udpHandler = new UdpCommunicationHandler();
-      
-      _tcpHandler = new TcpCommunicationHandler();
-      
-      _onServerStateChanged = onServerStateChanged;
-      
-      _onUpdateChartContent = onUpdateChartContent;
-      
-      DeviceName = "Not Connected";
+      get => _deviceName;
+
+      set
+      {
+        _deviceName = value;
+
+        OnPropertyChanged(nameof(DeviceName));
+      }
     }
 
+    public int MessagesSent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public int MessagesReceived { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    public StressMessageManager(Action<ServerState, IconChar, Brush, Brush> onServerStateChanged, Action<StressNotificationMessage> onUpdateChartContent, Action<IconChar, bool> onHandleStatusBarState, Action<MessageTypeInfo> onUpdateVRDataChartContent)
+    {
+      this.onServerStateChanged = onServerStateChanged;
+
+      onUpdateStressMessageChart = onUpdateChartContent;
+
+      this.onHandleStatusBarState = onHandleStatusBarState;
+
+      this.onUpdateVRDataChartContent = onUpdateVRDataChartContent;
+
+      DeviceName = ConfigurationManager.AppSettings.Get("DefaultClientNameValue");
+
+      _vrAppMessageCommunicationHandler = new();
+    }
     public async void ManageServerState()
     {
-      if (_serverRunning)
+      if(_serverRunning)
       {
+        var stressNotificationMessage = new StressNotificationMessage()
+        {
+          currentStressCategory = StressEffectCategory.None,
+          stressLevel = -1,
+          cancellationStatus = !_serverRunning
+        };
+
+        string serializedMessage = JsonConvert.SerializeObject(stressNotificationMessage, new StringEnumConverter());
+
+        byte[] serializedMessageBytes = Encoding.ASCII.GetBytes(serializedMessage);
+
+        await _vrAppMessageCommunicationHandler?.VRAppCommunicationSocket.SendAsync(serializedMessageBytes);
+        
         StopServer();
+      
+        _vrAppCancellationTokenSource.Cancel();
+
+        _vrAppCancellationTokenSource.Dispose();
       }
       else
       {
-        await StartServer();
+        StartServer();
       }
     }
-
-    private async Task StartServer()
+    public async void StartServer()
     {
       _serverRunning = true;
-      
+
       UpdateServerState(ServerState.Starting, IconChar.UserClock, Brushes.OrangeRed, Brushes.OrangeRed);
 
-      await _udpHandler.SendBroadcastMessage();
-      
-      var clientInfo = await _udpHandler.ReceiveClientInformationMessage();
-
-      if (clientInfo != null)
-      {
-        DeviceName = clientInfo.messageContent;
-        
-        UpdateServerState(ServerState.Connected, IconChar.UserCheck, Brushes.Lime, Brushes.Lime);
-      }
+      await _externalAppMessageCommunicationHandler.BroadcastMessageHandler.SendBroadcastMessage();
+    }
+    public void StopServer()
+    {
+      throw new NotImplementedException();
     }
 
-    private void StopServer()
+    public void UpdateServerState(ServerState state, IconChar icon, Brush color, Brush iconColor)
     {
-      _serverRunning = false;
-      
-      _udpHandler.Close();
-      
-      _tcpHandler.Close();
-      
-      _cancellationTokenSource.Cancel();
-      
-      UpdateServerState(ServerState.Stopped, IconChar.UserTimes, Brushes.Red, Brushes.OrangeRed);
-    }
-
-    private void UpdateServerState(ServerState state, IconChar icon, Brush color, Brush iconColor)
-    {
-      _onServerStateChanged?.Invoke(state, icon, color, iconColor);
+      throw new NotImplementedException();
     }
   }
 }
