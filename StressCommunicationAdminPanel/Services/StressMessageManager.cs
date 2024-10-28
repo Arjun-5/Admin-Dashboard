@@ -31,7 +31,7 @@ namespace StressCommunicationAdminPanel.Services
 
     private Action<StressNotificationMessage> _onUpdateChartContent;
 
-    private Action<MessageTypeInfo> _onUpdateReceivedDataChartContent;
+    private Action<ReceivedMessageInfo> _onUpdateReceivedDataChartContent;
 
     private Action<IconChar, bool> _onHandleStatusBarState;
 
@@ -80,7 +80,7 @@ namespace StressCommunicationAdminPanel.Services
       }
     }
     //Need to update setup later
-    public StressMessageManager(Action<ServerState, IconChar, Brush, Brush> onServerStateChanged, Action<StressNotificationMessage> onUpdateChartContent, Action<IconChar, bool> onHandleStatusBarState, Action<MessageTypeInfo> onUpdateReceivedChartContent)
+    public StressMessageManager(Action<ServerState, IconChar, Brush, Brush> onServerStateChanged, Action<StressNotificationMessage> onUpdateChartContent, Action<IconChar, bool> onHandleStatusBarState, Action<ReceivedMessageInfo> onUpdateReceivedChartContent)
     {
       _onServerStateChanged = onServerStateChanged;
 
@@ -160,7 +160,7 @@ namespace StressCommunicationAdminPanel.Services
 
       _onHandleStatusBarState?.Invoke(IconChar.PlugCircleExclamation, false);
     }
-    private async void ConfigureStressMessageSocketAttributes(StressMessageConfig config)
+    private async void ConfigureStressMessageSocketAttributes(StressMessageAppConfig config)
     {
       var stressMessageSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
@@ -250,7 +250,7 @@ namespace StressCommunicationAdminPanel.Services
       _client.Close();
     }
 
-    private async Task SetupConnectionParameters(StressMessageConfig config)
+    private async Task SetupConnectionParameters(StressMessageAppConfig config)
     {
       try
       {
@@ -322,12 +322,12 @@ namespace StressCommunicationAdminPanel.Services
       }
     }
 
-    private void OnStressMessageTimerElapsed(object sender, ElapsedEventArgs e, StressMessageConfig config)
+    private void OnStressMessageTimerElapsed(object sender, ElapsedEventArgs e, StressMessageAppConfig config)
     {
       SendStressMessage(config);
     }
 
-    private void SendStressMessage(StressMessageConfig config)
+    private void SendStressMessage(StressMessageAppConfig config)
     {
       if (_vrAppClientSocket == null)
       {
@@ -373,7 +373,7 @@ namespace StressCommunicationAdminPanel.Services
 
         DeviceName = deviceInfo.messageContent;
 
-        _onUpdateReceivedDataChartContent?.Invoke(MessageTypeInfo.DeviceInfo);
+        _onUpdateReceivedDataChartContent?.Invoke(deviceInfo);
       }
       catch (SocketException ex)
       {
@@ -402,14 +402,13 @@ namespace StressCommunicationAdminPanel.Services
           {
             MessagesReceived++;
 
-            if (receivedMessage.MessageTypeInfo == MessageTypeInfo.SelfReportStressInfo) 
-            {
-              _onUpdateReceivedDataChartContent?.Invoke(MessageTypeInfo.SelfReportStressInfo);
-            }
-
             if (receivedMessage.MessageTypeInfo == MessageTypeInfo.Exit)
             {
               _cancellationTokenSource.Cancel();
+            }
+            else
+            {
+              _onUpdateReceivedDataChartContent?.Invoke(receivedMessage);
             }
           }
         }

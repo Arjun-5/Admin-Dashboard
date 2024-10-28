@@ -2,11 +2,11 @@
 {
   public enum MessageTypeInfo
   {
-    None,
     DeviceInfo,
     SelfReportStressInfo,
     PhysicsInfo,
     TaskInfo,
-    Exit
+    Exit,
+    None
   }
 }

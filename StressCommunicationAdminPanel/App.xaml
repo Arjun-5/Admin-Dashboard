@@ -4,9 +4,8 @@
              xmlns:local="clr-namespace:StressCommunicationAdminPanel"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:helpers="clr-namespace:StressCommunicationAdminPanel.Helpers"
-             StartupUri="MainWindow.xaml">
+             Startup="AppStartup">
     <Application.Resources>
-
         <helpers:BoolRadioConverter x:Key="BoolRadioConverter" />
         <helpers:BoolRadioConverter x:Key="InverseBoolRadioConverter" inverse="True" />
 

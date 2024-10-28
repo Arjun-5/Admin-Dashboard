@@ -17,6 +17,8 @@ namespace StressCommunicationAdminPanel.ViewModels
 
     private bool _debugStatus;
 
+    private bool _shouldUseSplashScreen;
+
     public string IpAddress
     {
       get => _ipAddress;
@@ -65,6 +67,18 @@ namespace StressCommunicationAdminPanel.ViewModels
       }
     }
 
+    public bool ShouldUseSplashScreen
+    {
+      get => _shouldUseSplashScreen;
+
+      set
+      {
+        _shouldUseSplashScreen = value;
+
+        OnPropertyChanged(nameof(ShouldUseSplashScreen));
+      }
+    }
+
     public ICommand SaveCommand { get; }
     public ICommand ClearCommand { get; }
 
@@ -76,12 +90,13 @@ namespace StressCommunicationAdminPanel.ViewModels
     }
     private void SaveConfigSettingsToFile()
     {
-      var config = new StressMessageConfig
+      var config = new StressMessageAppConfig
       {
         ipAddress = this.IpAddress,
         stressMessageSendingPort = this.PortNumber,
         messageTimeInterval = this.TimeInterval,
-        shouldUseDebugSetup = this.DebugStatus
+        shouldUseDebugSetup = this.DebugStatus,
+        shouldUseSplashScreen = this.ShouldUseSplashScreen
       };
 
       string json = JsonConvert.SerializeObject(config,Formatting.Indented);
@@ -110,6 +125,8 @@ namespace StressCommunicationAdminPanel.ViewModels
         TimeInterval = config.messageTimeInterval;
 
         DebugStatus = config.shouldUseDebugSetup;
+
+        ShouldUseSplashScreen = config.shouldUseSplashScreen;
       }
     }
   }

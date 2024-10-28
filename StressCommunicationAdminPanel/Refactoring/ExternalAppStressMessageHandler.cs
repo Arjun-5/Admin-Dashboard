@@ -25,7 +25,7 @@ namespace StressCommunicationAdminPanel.Refactoring
     {
       _broadcastMessageHandler = new();
     }
-    private async void ConfigureSocketConnectionAttributes(StressMessageConfig appConfig)
+    private async void ConfigureSocketConnectionAttributes(StressMessageAppConfig appConfig)
     {
       var stressMessageReceiverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 

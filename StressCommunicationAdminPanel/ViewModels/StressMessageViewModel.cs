@@ -12,6 +12,8 @@ using System.Windows.Input;
 using StressCommunicationAdminPanel.Commands;
 using System.Windows;
 using System.Windows.Threading;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace StressCommunicationAdminPanel.ViewModels
 {
@@ -32,6 +34,10 @@ namespace StressCommunicationAdminPanel.ViewModels
     private Brush _connectionStatusColor;
 
     private Action<StressNotificationMessage> updateStressMessageDataTable;
+
+    private Action<List<DevicePhysicsData>> updateDevicePhysicsInfoView;
+
+    private Action<SelfReportMessageData> updateSelfReportMessageView;
     
     public ICommand ToggleServerStateCommand { get; }
     
@@ -108,7 +114,7 @@ namespace StressCommunicationAdminPanel.ViewModels
         OnPropertyChanged(nameof(ConnectionStatusColor));
       }
     }
-    public StressMessageViewModel(ProgressBar messageProgressBar, Action<StressNotificationMessage> onStressMessageSent)
+    public StressMessageViewModel(ProgressBar messageProgressBar, Action<StressNotificationMessage> onStressMessageSent, Action<List<DevicePhysicsData>> updateDevicePhysicsInfoView, Action<SelfReportMessageData> updateSelfReportMessageView)
     {
       _messageManager = new StressMessageManager(OnServerStateChanged, OnUpdateAdminPanelCharts, OnUpdateStatusBarContent, OnUpdateReceivedDataChart);
 
@@ -119,6 +125,10 @@ namespace StressCommunicationAdminPanel.ViewModels
       stresMessageInfoContentViewModel = new StresMessageInfoContentViewModel();
 
       updateStressMessageDataTable = onStressMessageSent;
+
+      this.updateDevicePhysicsInfoView = updateDevicePhysicsInfoView;
+
+      this.updateSelfReportMessageView = updateSelfReportMessageView;
 
       _messageManager.PropertyChanged += (s, e) => OnMessagesSentPropertyChanged(s, e);
 
@@ -179,9 +189,23 @@ namespace StressCommunicationAdminPanel.ViewModels
 
       _pieChartHelper.adminPanelMessageSentChartController.UpdateChartData(message.currentStressCategory);
     }
-    private void OnUpdateReceivedDataChart(MessageTypeInfo message)
+    private void OnUpdateReceivedDataChart(ReceivedMessageInfo message)
     {
-      _pieChartHelper.adminPanelMessageReceivedChartController.UpdateChartData(message);
+      _pieChartHelper.adminPanelMessageReceivedChartController.UpdateChartData(message.MessageTypeInfo);
+
+      switch(message.MessageTypeInfo)
+      {
+        case MessageTypeInfo.PhysicsInfo:
+          Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => {
+            updateDevicePhysicsInfoView?.Invoke(JsonConvert.DeserializeObject<List<DevicePhysicsData>>(message.messageContent));
+            }));
+          break;
+        case MessageTypeInfo.SelfReportStressInfo:
+          Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => {
+            updateSelfReportMessageView?.Invoke(JsonConvert.DeserializeObject<SelfReportMessageData>(message.messageContent));
+          }));
+          break;
+      }
     }
     private void OnUpdateStatusBarContent(IconChar icon, bool progressBarAnimationState)
     {

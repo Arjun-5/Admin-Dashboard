@@ -113,7 +113,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="auto" Margin="5 20 5 0">
                             <fa:IconImage Icon="MobileScreen" Height="20" Foreground="#9ece6a"/>
-                            <TextBlock Text="{Binding DeviceName}" Foreground="#cfc9c2" FontFamily="Perpetua" FontSize=" 15" FontWeight="ExtraBold" Margin="15 0 5 0"/>
+                            <TextBlock Text="{Binding DeviceName}" Foreground="#cfc9c2" FontFamily="Perpetua" FontSize="15" FontWeight="ExtraBold" Margin="15 0 5 0"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

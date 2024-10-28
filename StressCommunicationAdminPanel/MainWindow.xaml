@@ -8,7 +8,7 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+        Title="MainWindow" Height="720" Width="1280" Background="Transparent" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
@@ -47,7 +47,9 @@
                 <Separator Height="0.9" Margin="20 30" Background="#24283b"/>
 
                 <!-- Menu Buttons -->
-                <Button Style="{StaticResource menuButtonActive}" Command="{Binding ShowAdminPanelCommand}">
+                <Button x:Name="homePanel" Command="{Binding ShowAdminPanelCommand}" 
+                        Style="{StaticResource menuButton}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="HomeUser" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="Administrator Panel" Style="{StaticResource menuButtonText}">
@@ -55,7 +57,9 @@
                     </StackPanel>
                 </Button>
 
-                <Button Style="{StaticResource menuButton}" Command="{Binding ShowStresMessageInfoContentPanelCommand}">
+                <Button Command="{Binding ShowStresMessageInfoContentPanelCommand}" 
+                        Style="{StaticResource menuButton}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="SignalMessenger" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="Stress Message Info" Style="{StaticResource menuButtonText}">
@@ -63,28 +67,30 @@
                     </StackPanel>
                 </Button>
 
-                <Button Style="{StaticResource menuButton}" Command="{Binding ShowConfigurationControlPanelCommand}">
+                <Button Command="{Binding ShowConfigurationControlPanelCommand}" 
+                        Style="{StaticResource menuButton}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="ScrewdriverWrench" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="Configure IP Address" Style="{StaticResource menuButtonText}"/>
                     </StackPanel>
                 </Button>
 
-                <Button Style="{StaticResource menuButton}">
+                <Button Command="{Binding ShowSelfReportedStressContentCommand}" Style="{StaticResource menuButton}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="FileSignature" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="Self Reported Stress" Style="{StaticResource menuButtonText}"/>
                     </StackPanel>
                 </Button>
 
-                <Button Style="{StaticResource menuButton}">
+                <Button Style="{StaticResource menuButton}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Tasks" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="Task Info" Style="{StaticResource menuButtonText}"/>
                     </StackPanel>
                 </Button>
 
-                <Button Style="{StaticResource menuButton}">
+                <Button Command="{Binding ShowDeviceInfoContentCommand}"  Style="{StaticResource menuButton}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="VrCardboard" Style="{StaticResource menuButtonIcon}"/>
                         <TextBlock Text="Device Info" Style="{StaticResource menuButtonText}"/>
@@ -97,7 +103,6 @@
                         <TextBlock Text="Exit Application" Style="{StaticResource menuButtonText}"/>
                     </StackPanel>
                 </Button>
-
             </StackPanel>
         </Border>
 

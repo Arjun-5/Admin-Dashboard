@@ -12,7 +12,6 @@ using System.Text;
 using System.Windows;
 using System.IO;
 using Microsoft.Win32;
-using StressCommunicationAdminPanel.Controller;
 using StressCommunicationAdminPanel.Interfaces;
 using LiveChartsCore.Measure;
 

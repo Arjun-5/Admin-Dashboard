@@ -1,17 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using StressCommunicationAdminPanel.Helpers;
+using StressCommunicationAdminPanel.SplashScreen;
 using System.Windows;
 
 namespace StressCommunicationAdminPanel
 {
-  /// <summary>
-  /// Interaction logic for App.xaml
-  /// </summary>
   public partial class App : Application
   {
+    void AppStartup(object sender, StartupEventArgs e)
+    {
+      var appConfig = ConfigHandler.LoadConfig();
+
+      if (!appConfig.shouldUseSplashScreen)
+      {
+        var startupWindow = new MainWindow();
+
+        startupWindow.Show();
+      }
+      else
+      {
+        var splashScreenWindow = new StartupSplashScreen();
+
+        splashScreenWindow.Show();
+      }
+    }
   }
 }

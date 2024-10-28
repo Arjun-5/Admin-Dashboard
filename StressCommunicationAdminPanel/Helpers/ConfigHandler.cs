@@ -7,7 +7,7 @@ namespace StressCommunicationAdminPanel.Helpers
 {
     public class ConfigHandler
     {
-    public static StressMessageConfig LoadConfig()
+    public static StressMessageAppConfig LoadConfig()
     {
       string configFileLocation = Path.Combine(Environment.CurrentDirectory, "StressMessageConfig.json");
 
@@ -15,7 +15,7 @@ namespace StressCommunicationAdminPanel.Helpers
       {
         var processedConfigData = File.ReadAllText(configFileLocation);
 
-        return JsonConvert.DeserializeObject<StressMessageConfig>(processedConfigData);
+        return JsonConvert.DeserializeObject<StressMessageAppConfig>(processedConfigData);
       }
       catch (Exception ex)
       {

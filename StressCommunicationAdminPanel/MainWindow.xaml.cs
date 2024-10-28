@@ -33,7 +33,7 @@ namespace StressCommunicationAdminPanel
     {
       InitializeComponent();
 
-      DataContext = new StressCommunicationAppMainViewModel(messageProgressBar);
+      DataContext = new StressCommunicationAppMainViewModel(messageProgressBar, homePanel);
     }
     private void Border_MouseDownEvent(object sender, MouseButtonEventArgs e)
     {

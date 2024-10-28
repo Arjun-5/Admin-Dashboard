@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace StressCommunicationAdminPanel.Commands
 {
-  using System;
-  using System.Windows.Input;
-
   public class RelayCommand : ICommand
   {
     private readonly Action _execute;
+
+    private readonly Action<object> _executeWithParameter;
 
     private readonly Func<bool> _canExecute;
 
@@ -19,6 +15,13 @@ namespace StressCommunicationAdminPanel.Commands
     {
       _execute = execute;
     
+      _canExecute = canExecute;
+    }
+
+    public RelayCommand(Action<object> executeWithParameter, Func<bool> canExecute = null)
+    {
+      _executeWithParameter = executeWithParameter ?? throw new ArgumentNullException(nameof(executeWithParameter));
+     
       _canExecute = canExecute;
     }
 
@@ -36,7 +39,14 @@ namespace StressCommunicationAdminPanel.Commands
 
     public void Execute(object parameter)
     {
-      _execute();
+      if (_execute != null)
+      {
+        _execute();
+      }
+      else if (_executeWithParameter != null)
+      {
+        _executeWithParameter(parameter);
+      }
     }
   }
 }
